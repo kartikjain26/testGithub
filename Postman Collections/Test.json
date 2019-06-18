@@ -1,0 +1,103 @@
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>APIMATIC - Login</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" rel="stylesheet" />
+<link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery.scrollbar/0.2.11/jquery.scrollbar.min.css"
+          integrity="sha256-nVXk5aDYc/D4r9OoqxZ5H6vpIAqAG5BhVuIdOihDN1c="
+          crossorigin="anonymous" />
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+
+<link href="/bundles/front-css?v=hbJjiAOxOQjJuTK88uIyUUEZjDv7-MzzrYV_0oeJ4PU1" rel="stylesheet"/>
+
+
+	<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+	<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+</head>
+<body class="signup">
+	<div class="sign-up-head">
+
+		<a href="/"><img src="/img/theme/apimaticLogoLight.png" class="center-block" /></a>
+		<h3>Welcome to APIMATIC</h3>
+		<p>Please use your credentials to sign in.</p>
+	</div>
+	<div class="sign-up-form">
+<form action="/account/login?ReturnUrl=%2Fapi%2Ftransform%3Fformat%3Dapimatic" id="loginForm" method="post" role="form"><input name="__RequestVerificationToken" type="hidden" value="pijLGIqaXO98V2guyzKy4dlytDDuuuRVxtSJKDSfnbUhCFUMiNtrh3AJKJr0AAPdQgG5s0SWuaScL2HXlHEdsupJgNIJjpCzWsZlTcBi4M01" /><div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>			<div class="form-group">
+                <label class="form-label">Email</label>
+                <input class="form-control" data-val="true" data-val-email="The Email Address field is not a valid e-mail address." data-val-required="Email is required" id="Email" name="Email" placeholder="Email Address" required="true" type="email" value="" />
+			</div>
+			<div class="form-group">
+                <label class="form-label">Password</label>
+                <input class="form-control extra-padding-right" data-title="Caps lock is on" data-toggle="tooltip" data-trigger="manual" data-val="true" data-val-required="Password is required" id="js-onboarding-password-field" name="Password" placeholder="Password" required="true" type="password" />
+                <i class="fa fa-eye onboarding-show-password-icon" id="js-onboarding-show-password-icon"></i>
+			</div>
+			<div>
+				<input type="submit" class="btn sign-up-btn " value="Sign in" />
+			</div>
+			<div class="row forget-remember">
+				<div class="col-md-6">
+					<div class="checkbox">
+						<label>
+							<input data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" type="checkbox" value="true" /><input name="RememberMe" type="hidden" value="false" /> Remember me?
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<a href="/account/forgotpassword">Forgot your password?</a>
+				</div>
+			</div>
+</form>		<div class="already-account">
+			<p>Don't have an account?</p>
+			<a href="/account/register" class="btn create-account">Create Account</a>
+		</div>
+
+	</div>
+
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
+
+<script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+
+<script src="/bundles/front-js?v=UHBw1Io9Djd4tJ9Usw-KPgoO1M1Rd6f4PUSfhjYfZtc1"></script>
+
+<scirpt src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></scirpt>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+<script src="/bundles/onboarding-js?v=7gFnskzWYL1lpluHudHyeOm_qY--TeTHuPMBzjhky4U1"></script>
+;
