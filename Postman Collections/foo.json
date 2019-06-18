@@ -1,0 +1,47 @@
+{
+  "info": {
+    "_postman_id": "6329-c5c60e58-2953-4ef4-a34f-ebf199a56ede",
+    "name": "foo",
+    "description": "<table><tr><td>`Hello` _there_</td></tr></table>",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "req",
+      "_postman_id": "6329-4333d708-8749-44cd-98b6-2ac01f4839e0",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "url": "{{url}}",
+        "description": "Sample requestcddc"
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "732324f3-ad81-4afb-9d3c-d7f1f7b1b324",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "030a030a-557d-454c-b9fe-fe3884221ff3",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
