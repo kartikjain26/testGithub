@@ -1,0 +1,395 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Documenter ’ UDS #contract",
+    "description": "Binding contract for UDS, covers all endpoints called by Documenter",
+    "contact": {}
+  },
+  "host": "example.com",
+  "basePath": "/",
+  "securityDefinitions": {
+    "auth": {
+      "type": "basic"
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/signup": {
+      "post": {
+        "description": "TODO: Add Description",
+        "summary": "Create non-RBAC User",
+        "tags": [
+          "Setup"
+        ],
+        "operationId": "ApiSignupPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Createnon-RBACUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/api/users/{RbacUserId}/migrate_api_version": {
+      "put": {
+        "description": "TODO: Add Description",
+        "summary": "Migrate User to RBAC",
+        "tags": [
+          "Setup"
+        ],
+        "operationId": "ApiUsersMigrateApiVersionByRbacUserIdPut",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Postman-Token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "cache-control",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/MigrateUsertoRBACRequest"
+            }
+          },
+          {
+            "name": "RbacUserId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/v1/list": {
+      "post": {
+        "description": "TODO: Add Description",
+        "summary": "Get Team for User ID",
+        "tags": [
+          "List Entities"
+        ],
+        "operationId": "V1ListPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parents",
+            "in": "query",
+            "required": true,
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-postman-service",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/api/users/{RbacUserId}/delete_account": {
+      "post": {
+        "description": "TODO: Add Description",
+        "summary": "Delete RBAC User",
+        "tags": [
+          "Teardown"
+        ],
+        "operationId": "ApiUsersDeleteAccountByRbacUserIdPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Postman-Token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "cache-control",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "RbacUserId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/api/users/{nonRbacUserId}/delete_account": {
+      "post": {
+        "description": "TODO: Add Description",
+        "summary": "Delete non-RBAC User",
+        "tags": [
+          "Teardown"
+        ],
+        "operationId": "ApiUsersDeleteAccountByNonRbacUserIdPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Postman-Token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "cache-control",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "nonRbacUserId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Createnon-RBACUserRequest": {
+      "title": "Createnon-RBACUserRequest",
+      "example": {
+        "username": "{{nonRbacUserPrefix}}",
+        "email": "{{nonRbacUserPrefix}}@postman.com",
+        "password": "{{nonRbacUserPrefix}}"
+      },
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "username",
+        "email",
+        "password"
+      ]
+    },
+    "CreateRBACUserRequest": {
+      "title": "CreateRBACUserRequest",
+      "example": {
+        "username": "{{RbacUserPrefix}}",
+        "email": "{{RbacUserPrefix}}@postman.com",
+        "password": "{{RbacUserPrefix}}"
+      },
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "username",
+        "email",
+        "password"
+      ]
+    },
+    "MigrateUsertoRBACRequest": {
+      "title": "MigrateUsertoRBACRequest",
+      "example": {
+        "targetApiVersion": "1"
+      },
+      "type": "object",
+      "properties": {
+        "targetApiVersion": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "targetApiVersion"
+      ]
+    }
+  },
+  "security": [
+    {
+      "auth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Setup"
+    },
+    {
+      "name": "List Entities",
+      "description": "This method is used by Email to fetch information about users and teams. There are checks on the response structure, and existence of some keys."
+    },
+    {
+      "name": "Teardown"
+    }
+  ]
+}
