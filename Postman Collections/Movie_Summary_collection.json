@@ -1,0 +1,438 @@
+{
+  "Name": "Movie Summary collection",
+  "BaseUri": "http://api.nytimes.com/svc/movies/v2/reviews",
+  "ServerConfiguration": {
+    "DefaultEnvironment": "production",
+    "DefaultServer": "Server 1",
+    "Environments": [
+      {
+        "Name": "production",
+        "Servers": [
+          {
+            "Name": "Server 1",
+            "Url": "http://api.nytimes.com/svc/movies/v2/reviews"
+          },
+          {
+            "Name": "Server 2",
+            "Url": "http://www.omdbapi.com"
+          },
+          {
+            "Name": "Server 3",
+            "Url": "https://api.dailymotion.com"
+          }
+        ]
+      }
+    ],
+    "Parameters": []
+  },
+  "Description": "This collection fetches the summary of a movie from various sources",
+  "Version": "1.0",
+  "Contact": {},
+  "AdditionalHeaders": [],
+  "Authentication": {
+    "Type": "None",
+    "AuthType": "None",
+    "Parameters": [],
+    "Scopes": [],
+    "ParamFormats": {}
+  },
+  "Endpoints": [
+    {
+      "Name": "NY Times Movie Summary",
+      "Description": "TODO: Add Description",
+      "HTTPMethod": "GET",
+      "Group": "Misc",
+      "RequiresAuthentication": true,
+      "Server": "Server 1",
+      "Route": "/all.json",
+      "Response": {
+        "Optional": false,
+        "Type": "Void",
+        "IsSdlNativeType": true,
+        "Constant": false,
+        "IsStream": false,
+        "IsAttribute": false,
+        "Nullable": false,
+        "IsArray": false,
+        "IsMap": false,
+        "Deprecated": false,
+        "Name": "Response"
+      },
+      "HasOptionalQueryParams": false,
+      "HasOptionalFieldParams": false,
+      "CollectParameters": false,
+      "Parameters": [
+        {
+          "ParamFormat": "Query",
+          "Optional": false,
+          "Type": "String",
+          "IsSdlNativeType": true,
+          "Constant": false,
+          "IsStream": false,
+          "IsAttribute": false,
+          "Example": "{{movies}}",
+          "Nullable": false,
+          "IsArray": false,
+          "IsMap": false,
+          "Deprecated": false,
+          "Name": "query",
+          "Description": "",
+          "DefaultValue": ""
+        },
+        {
+          "ParamFormat": "Header",
+          "Optional": false,
+          "Type": "String",
+          "IsSdlNativeType": true,
+          "Constant": false,
+          "IsStream": false,
+          "IsAttribute": false,
+          "Example": "a822e9aabe5a64be14910b72d32eec47e9c7c65d93b53646c5c33c74595dabe650dca6624f73983f1625e8e2930fc00115b0b7d33fa913c021f55c33eb008bdb",
+          "Nullable": false,
+          "IsArray": false,
+          "IsMap": false,
+          "Deprecated": false,
+          "Name": "api-key",
+          "Description": "",
+          "DefaultValue": ""
+        }
+      ],
+      "Errors": [],
+      "TestCases": [
+        {
+          "Name": "NY Times Movie Summary",
+          "Description": "TODO: Add Description",
+          "Enabled": true,
+          "ShouldPass": true,
+          "InputParameters": [
+            {
+              "IsNull": false,
+              "Name": "query",
+              "Value": "{{movies}}"
+            },
+            {
+              "IsNull": false,
+              "Name": "api-key",
+              "Value": "a822e9aabe5a64be14910b72d32eec47e9c7c65d93b53646c5c33c74595dabe650dca6624f73983f1625e8e2930fc00115b0b7d33fa913c021f55c33eb008bdb"
+            }
+          ],
+          "ExpectedStatus": "200",
+          "ExpectedHeaders": [],
+          "ExpectedHeadersAllowExtra": true,
+          "ExpectedBodyMatchMode": "NONE",
+          "ExpectedArrayOrderedMatching": false,
+          "ExpectedArrayCheckCount": false,
+          "ResponseMatchSchema": true
+        }
+      ],
+      "WrapBodyInObject": false,
+      "Deprecated": false
+    },
+    {
+      "Name": "OMDB Movie Summary",
+      "Description": "TODO: Add Description",
+      "HTTPMethod": "GET",
+      "Group": "Misc",
+      "RequiresAuthentication": true,
+      "Server": "Server 2",
+      "Route": "/",
+      "Response": {
+        "Optional": false,
+        "Type": "Void",
+        "IsSdlNativeType": true,
+        "Constant": false,
+        "IsStream": false,
+        "IsAttribute": false,
+        "Nullable": false,
+        "IsArray": false,
+        "IsMap": false,
+        "Deprecated": false,
+        "Name": "Response"
+      },
+      "HasOptionalQueryParams": false,
+      "HasOptionalFieldParams": false,
+      "CollectParameters": false,
+      "Parameters": [
+        {
+          "ParamFormat": "Query",
+          "Optional": false,
+          "Type": "String",
+          "IsSdlNativeType": true,
+          "Constant": false,
+          "IsStream": false,
+          "IsAttribute": false,
+          "Example": "{{key}}",
+          "Nullable": false,
+          "IsArray": false,
+          "IsMap": false,
+          "Deprecated": false,
+          "Name": "apikey",
+          "Description": "",
+          "DefaultValue": ""
+        },
+        {
+          "ParamFormat": "Query",
+          "Optional": false,
+          "Type": "String",
+          "IsSdlNativeType": true,
+          "Constant": false,
+          "IsStream": false,
+          "IsAttribute": false,
+          "Example": "{{movies}}",
+          "Nullable": false,
+          "IsArray": false,
+          "IsMap": false,
+          "Deprecated": false,
+          "Name": "t",
+          "Description": "",
+          "DefaultValue": ""
+        },
+        {
+          "ParamFormat": "Header",
+          "Optional": false,
+          "Type": "Number",
+          "IsSdlNativeType": true,
+          "Constant": false,
+          "IsStream": false,
+          "IsAttribute": false,
+          "Example": "123",
+          "Nullable": false,
+          "IsArray": false,
+          "IsMap": false,
+          "Deprecated": false,
+          "Name": "aa",
+          "Description": "",
+          "DefaultValue": ""
+        }
+      ],
+      "Errors": [],
+      "TestCases": [
+        {
+          "Name": "OMDB Movie Summary",
+          "Description": "TODO: Add Description",
+          "Enabled": true,
+          "ShouldPass": true,
+          "InputParameters": [
+            {
+              "IsNull": false,
+              "Name": "apikey",
+              "Value": "{{key}}"
+            },
+            {
+              "IsNull": false,
+              "Name": "t",
+              "Value": "{{movies}}"
+            },
+            {
+              "IsNull": false,
+              "Name": "aa",
+              "Value": "123"
+            }
+          ],
+          "ExpectedStatus": "200",
+          "ExpectedHeaders": [],
+          "ExpectedHeadersAllowExtra": true,
+          "ExpectedBodyMatchMode": "NONE",
+          "ExpectedArrayOrderedMatching": false,
+          "ExpectedArrayCheckCount": false,
+          "ResponseMatchSchema": true
+        }
+      ],
+      "WrapBodyInObject": false,
+      "Deprecated": false
+    },
+    {
+      "Name": "Trailer search",
+      "Description": "TODO: Add Description",
+      "HTTPMethod": "GET",
+      "Group": "Misc",
+      "RequiresAuthentication": true,
+      "Server": "Server 3",
+      "Route": "/videos",
+      "Response": {
+        "Optional": false,
+        "Type": "Void",
+        "IsSdlNativeType": true,
+        "Constant": false,
+        "IsStream": false,
+        "IsAttribute": false,
+        "Nullable": false,
+        "IsArray": false,
+        "IsMap": false,
+        "Deprecated": false,
+        "Name": "Response"
+      },
+      "HasOptionalQueryParams": false,
+      "HasOptionalFieldParams": false,
+      "CollectParameters": false,
+      "Parameters": [
+        {
+          "ParamFormat": "Query",
+          "Optional": false,
+          "Type": "String",
+          "IsSdlNativeType": true,
+          "Constant": false,
+          "IsStream": false,
+          "IsAttribute": false,
+          "Example": "{{movies}} trailer",
+          "Nullable": false,
+          "IsArray": false,
+          "IsMap": false,
+          "Deprecated": false,
+          "Name": "search",
+          "Description": "",
+          "DefaultValue": ""
+        },
+        {
+          "ParamFormat": "Query",
+          "Optional": false,
+          "Type": "Number",
+          "IsSdlNativeType": true,
+          "Constant": false,
+          "IsStream": false,
+          "IsAttribute": false,
+          "Example": "1",
+          "Nullable": false,
+          "IsArray": false,
+          "IsMap": false,
+          "Deprecated": false,
+          "Name": "page",
+          "Description": "",
+          "DefaultValue": ""
+        },
+        {
+          "ParamFormat": "Query",
+          "Optional": false,
+          "Type": "Number",
+          "IsSdlNativeType": true,
+          "Constant": false,
+          "IsStream": false,
+          "IsAttribute": false,
+          "Example": "3",
+          "Nullable": false,
+          "IsArray": false,
+          "IsMap": false,
+          "Deprecated": false,
+          "Name": "limit",
+          "Description": "",
+          "DefaultValue": ""
+        }
+      ],
+      "Errors": [],
+      "TestCases": [
+        {
+          "Name": "Trailer search",
+          "Description": "TODO: Add Description",
+          "Enabled": true,
+          "ShouldPass": true,
+          "InputParameters": [
+            {
+              "IsNull": false,
+              "Name": "search",
+              "Value": "{{movies}} trailer"
+            },
+            {
+              "IsNull": false,
+              "Name": "page",
+              "Value": "1"
+            },
+            {
+              "IsNull": false,
+              "Name": "limit",
+              "Value": "3"
+            }
+          ],
+          "ExpectedStatus": "200",
+          "ExpectedHeaders": [],
+          "ExpectedHeadersAllowExtra": true,
+          "ExpectedBodyMatchMode": "NONE",
+          "ExpectedArrayOrderedMatching": false,
+          "ExpectedArrayCheckCount": false,
+          "ResponseMatchSchema": true
+        }
+      ],
+      "WrapBodyInObject": false,
+      "Deprecated": false
+    }
+  ],
+  "EndpointGroups": [
+    {
+      "Name": "Misc",
+      "Description": ""
+    }
+  ],
+  "CustomTypes": [],
+  "CodeGenSettings": {
+    "SynchronyMode": "Asynchronous",
+    "ModelSerializationScheme": "Json",
+    "ArraySerialization": "Indexed",
+    "Nullify404": false,
+    "UseHttpMethodPrefix": true,
+    "UseModelPrefix": false,
+    "UseExceptionPrefix": true,
+    "UseEnumPrefix": true,
+    "UseControllerPrefix": true,
+    "UseConstructorsForConfig": false,
+    "Timeout": 0.0,
+    "AndroidUseAppManifest": false,
+    "iOSUseAppInfoPlist": false,
+    "iOSGenerateCoreData": false,
+    "CollapseParamsToArray": false,
+    "RunscopeEnabled": false,
+    "AndroidHttpClient": "ANDROID_OK",
+    "JavaHttpClient": "JAVA_OK",
+    "ObjCHttpClient": "UNIREST",
+    "CSharpHttpClient": "UNIREST",
+    "NodeHttpClient": "NODE_REQUEST",
+    "JavaUsePropertiesConfig": false,
+    "PHPHttpClient": "UNIREST",
+    "EnablePHPComposerVersionString": false,
+    "EnableGlobalUserAgent": true,
+    "EnableAdditionalModelProperties": false,
+    "PreserveParameterOrder": true,
+    "ValidateRequiredParameters": false,
+    "AppendContentHeaders": true,
+    "GenerateInterfaces": false,
+    "UseCommonSDKLibrary": false,
+    "ParameterArrayFormat": "ParamArrayWithIndex",
+    "SecurityProtocols": [
+      "Ssl3",
+      "Tls"
+    ],
+    "GenerateTravisConfig": false,
+    "GenerateCircleConfig": false,
+    "GenerateAppveyorConfig": false,
+    "GenerateJenkinsConfig": false,
+    "EnableLogging": false,
+    "EnableHttpCache": false,
+    "Retries": 0,
+    "RetryInterval": 1.0,
+    "GenerateAdvancedDocs": true,
+    "DisableDocs": false,
+    "StoreTimezoneInformation": false,
+    "UnderscoreNumbers": true,
+    "UseSingletonPattern": true,
+    "IgnoreIfNullJson": false,
+    "DisableLinting": false,
+    "SortResources": false,
+    "LiftParameterDescriptionFromCustomType": false,
+    "AllowSkippingSSLCertVerification": false,
+    "ApplyCustomizations": [],
+    "DoNotSplitWords": [],
+    "ReturnCompleteHttpResponse": false,
+    "ThrowForHttpErrorStatusCodes": true,
+    "GenerateModels": true,
+    "GenerateExceptions": true,
+    "ResponseMapping": {
+      "Type": "Simple"
+    },
+    "ForceKeywordArgsInRuby": false,
+    "SymbolizeHashKeysInRuby": false
+  },
+  "Errors": [],
+  "TestGenSettings": {
+    "Configuration": {},
+    "TestTimeout": 30,
+    "PrecisionDelta": 0.01
+  }
+}
