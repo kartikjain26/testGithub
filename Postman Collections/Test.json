@@ -51,7 +51,7 @@
 		<p>Please use your credentials to sign in.</p>
 	</div>
 	<div class="sign-up-form">
-<form action="/account/login?ReturnUrl=%2Fapi%2Ftransform%3Fformat%3Dapimatic" id="loginForm" method="post" role="form"><input name="__RequestVerificationToken" type="hidden" value="8a4OUv0sg6FMk-m9hhiNpAsWdohx3Np-8EzWu7Z6cuKGBar0QW6Oanj--AE8zOEh4QinrOMsJiRLSL6WYBlTpjGu9R97YnC8qIxrKmlQqco1" /><div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+<form action="/account/login?ReturnUrl=%2Fapi%2Ftransform%3Fformat%3Dapimatic" id="loginForm" method="post" role="form"><input name="__RequestVerificationToken" type="hidden" value="5LX4LyrNdDUEI4fBq7lx6pyEYnuNFc3YiVQsBMrldUgkRN46I0b0naMCaTbRneoUepn3ASMV2SekDBYWevUk3GEjgg_tCYqS61CDK-w5Kf01" /><div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
 </ul></div>			<div class="form-group">
                 <label class="form-label">Email</label>
                 <input class="form-control" data-val="true" data-val-email="The Email Address field is not a valid e-mail address." data-val-required="Email is required" id="Email" name="Email" placeholder="Email Address" required="true" type="email" value="" />
