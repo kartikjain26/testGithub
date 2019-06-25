@@ -1,0 +1,100 @@
+{
+  "info": {
+    "_postman_id": "25f7dd49-acaa-425f-83bc-15b1cba6c7a5",
+    "name": "Documenter favicon",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "https://app.getpostman-beta.com/api/organizations/9135/settings",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "bdfb0502-5f40-4d17-b060-042b289ed938",
+            "exec": [
+              "let x = 1;",
+              "y = 0;ccc",
+              "",
+              "z z "
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "321291bd-67c4-4fb9-a329-bb24244b6326",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "x-access-token",
+            "value": "b30648236a1d11de8a14ddda80e44db942b1b119424b9c542ba631f37e341085ba71fb5b19d2c2cc357f3d7fe975800e99326e953d20551d6ac66e4c14fbec15",
+            "type": "text"
+          }
+        ],
+        "url": "https://app.getpostman-beta.com/api/organizations/9135/settings"
+      },
+      "response": []
+    },
+    {
+      "name": "https://app.getpostman-beta.com/x/api/admin_api/organizations/9135/profile",
+      "_postman_id": "85c04139-1cc1-42ff-b755-08cb5f0f79e3",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": {
+            "username": "godserver",
+            "password": "08fKilUsV354EY5sdrOXeDW0W24dJsNXv7rRJ99X4NAe7BzCrWQXvdR9xijJfqcmn",
+            "saveHelperData": true,
+            "showPassword": false
+          }
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "https://app.getpostman-beta.com/x/api/admin_api/organizations/9135/profile"
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:1337/api/collection/12136/r",
+      "_postman_id": "e912bb47-7011-4ca7-a6e6-1da3e333900a",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-access-token",
+            "value": "b30648236a1d11de8a14ddda80e44db942b1b119424b9c542ba631f37e341085ba71fb5b19d2c2cc357f3d7fe975800e99326e953d20551d6ac66e4c14fbec15",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "localhost:1337/api/collection/12136/r"
+      },
+      "response": []
+    }
+  ]
+}
