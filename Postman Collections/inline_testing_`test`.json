@@ -1,0 +1,205 @@
+{
+  "info": {
+    "_postman_id": "3889161b-88b6-41a2-9a48-3bac2dbf1148",
+    "name": "inline testing `test`",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "folder **1** *jj* `11dxsx`",
+      "item": [
+        {
+          "name": "www.google.com",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "67220e2b-93c4-4f84-9232-514b4d8981b5",
+                "exec": [
+                  "sccsscsc"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "16ac483f-9358-4e7e-b97e-17302b37d315",
+                "exec": [
+                  "cdcsc"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "07f780be-ae6f-4d32-8f26-736be2ef410d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "ad",
+                "value": "dd",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "dcsccscs"
+            },
+            "url": {
+              "raw": "www.google.com?asd=asd&d=d&d=",
+              "host": [
+                "www",
+                "google",
+                "com"
+              ],
+              "query": [
+                {
+                  "key": "asd",
+                  "value": "asd",
+                  "type": "text"
+                },
+                {
+                  "key": "d",
+                  "value": "d",
+                  "type": "text"
+                },
+                {
+                  "key": "d",
+                  "value": "",
+                  "type": "text"
+                }
+              ]
+            },
+            "description": "this can be a `marked dow desc` also *but* not **in caps**"
+          },
+          "response": []
+        },
+        {
+          "name": "www.google.com?asd=asd&d=d&d=",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "67220e2b-93c4-4f84-9232-514b4d8981b5",
+                "exec": [
+                  "sccsscsc"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "16ac483f-9358-4e7e-b97e-17302b37d315",
+                "exec": [
+                  "cdcsc"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "93a51a9f-e91c-4220-94d8-f0781b75ac0b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "ad",
+                "value": "dd",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "dcsccscs"
+            },
+            "url": {
+              "raw": "www.google.com?asd=asd&d=d&d=",
+              "host": [
+                "www",
+                "google",
+                "com"
+              ],
+              "query": [
+                {
+                  "key": "asd",
+                  "value": "asd"
+                },
+                {
+                  "key": "d",
+                  "value": "d"
+                },
+                {
+                  "key": "d",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "6c39a169-5464-497b-9987-064d0b915dec"
+    },
+    {
+      "name": "folder **1** *jj* `11dxsx` Copy",
+      "item": [
+        {
+          "name": "www.google.com Copy Copy Copy",
+          "_postman_id": "0afd2e59-04ad-4e59-a64c-d6b4806d81e9",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "www.google.com",
+            "description": "this can be a `marked dow desc` also *but* not **in caps**"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "2e81bf14-eaef-4243-b9b6-ce720ff0ac26"
+    },
+    {
+      "name": "folder **1** *jj* `11dxsx` Copy Copy",
+      "item": [
+        {
+          "name": "www.google.com Copy Copy",
+          "_postman_id": "b29ae1e2-f3da-44e4-b8be-e48b84d46ec6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "www.google.com",
+            "description": "this can be a `marked dow desc` also *but* not **in caps**"
+          },
+          "response": []
+        },
+        {
+          "name": "www.google.com Copy",
+          "_postman_id": "2d8e1fe3-9cb6-4934-bc29-21a0f7ddfaf5",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "www.google.com",
+            "description": "this can be a `marked dow desc` also *but* not **in caps**"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "fe356f3c-34e2-4b5c-831c-240027894ad7"
+    }
+  ]
+}
