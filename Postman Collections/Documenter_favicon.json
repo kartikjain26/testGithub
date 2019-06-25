@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "25f7dd49-acaa-425f-83bc-15b1cba6c7a5",
+    "_postman_id": "e611495f-e906-4a36-bd24-57804deaa9ca",
     "name": "Documenter favicon",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
@@ -22,7 +22,7 @@
           }
         }
       ],
-      "_postman_id": "321291bd-67c4-4fb9-a329-bb24244b6326",
+      "_postman_id": "0df585af-8e8c-486e-a005-6e42cc05cca7",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
       },
@@ -46,7 +46,7 @@
     },
     {
       "name": "https://app.getpostman-beta.com/x/api/admin_api/organizations/9135/profile",
-      "_postman_id": "85c04139-1cc1-42ff-b755-08cb5f0f79e3",
+      "_postman_id": "8896237e-04e3-493b-9883-85203345988a",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
       },
@@ -74,7 +74,7 @@
     },
     {
       "name": "localhost:1337/api/collection/12136/r",
-      "_postman_id": "e912bb47-7011-4ca7-a6e6-1da3e333900a",
+      "_postman_id": "62388dbf-6370-45c6-ba5f-1c0bda6100a1",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
       },
