@@ -80,7 +80,7 @@
           "response": []
         },
         {
-          "name": "www.google.com?asd=asd&d=d&d=",
+          "name": "www.google.com?asd=",
           "event": [
             {
               "listen": "prerequest",
