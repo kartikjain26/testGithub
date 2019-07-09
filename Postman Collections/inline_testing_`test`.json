@@ -10,7 +10,7 @@
       "name": "folder **1** *jj* `  {{url}}",
       "item": [
         {
-          "name": "www.google.com",
+          "name": "www.google.com {{url}}",
           "event": [
             {
               "listen": "prerequest",
@@ -75,7 +75,7 @@
                 }
               ]
             },
-            "description": "this can be a `marked dow desc` also *but* not **in caps**"
+            "description": "this can be a `marked dow desc` also *but* not **in caps**\n\n{{url}}"
           },
           "response": []
         },
