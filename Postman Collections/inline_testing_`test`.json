@@ -7,7 +7,7 @@
   },
   "item": [
     {
-      "name": "folder **1** *jj* `",
+      "name": "folder **1** *jj* `  {{url}}",
       "item": [
         {
           "name": "www.google.com",
@@ -147,7 +147,7 @@
         }
       ],
       "_postman_id": "6c39a169-5464-497b-9987-064d0b915dec",
-      "description": "hey i am *a marked down* **description** _do not delete_",
+      "description": "hey i am *a marked down* **description** _do not delete_\n\n{{url}}",
       "event": [
         {
           "listen": "prerequest",
