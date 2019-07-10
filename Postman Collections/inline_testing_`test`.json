@@ -10,7 +10,7 @@
       "name": "folder **1** *jj* ` {{url}} {{url}} {{url}} ",
       "item": [
         {
-          "name": "www.google.com {{url}} ",
+          "name": "www.google.com {{url}}",
           "event": [
             {
               "listen": "prerequest",
