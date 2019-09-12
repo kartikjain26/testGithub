@@ -1,137 +1,999 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>APIMATIC - Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+FORMAT: 1A
+HOST: https://api.getpostman.com
 
-    
-    
+# MOCKS: fake it till you make it
+### Get Started
 
-    
+1. **Get Postman API Key**: to get your Postman API key, log in to the [Postman web dashboard](https://app.getpostman.com/). Select the workspace that you'd like to work in, and tab over to the Integrations page. 
+  
+  ![[integrations page](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-integrations-page.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-integrations-page.png)
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  Toggle over to "Browse Integrations", view details about the Postman API, and hit **Get API Key**. Copy and paste this value into a [Postman environment](https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_environments).
+  
+  ![[Postman API page](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-api-key.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-api-key.png)
+1. **Update Postman environment**: [create and update an environment](https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_environments) to store required variables.
+1. **Run the collection or folder**: to [run the collection or folder](https://www.getpostman.com/docs/v6/postman/collection_runs/intro_to_collection_runs), click on the arrow (&#9658;) next to the collection name to expand the collection details. Click the blue **Run** button to open the Collection Runner in a separate window. 
+  
+  Select the collection or folder you wish to run. Select the environment to run it against, if you are using one. When you're ready to run the collection or folder, hit the blue **Run** button.
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+# Group Create a mock from scratch
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" rel="stylesheet" />
-<link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/jquery.scrollbar/0.2.11/jquery.scrollbar.min.css"
-          integrity="sha256-nVXk5aDYc/D4r9OoqxZ5H6vpIAqAG5BhVuIdOihDN1c="
-          crossorigin="anonymous" />
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+Create a new collection and mock endpoint.
 
-<link href="/bundles/front-css?v=11O7jOwdtFxvmVBTuhI4jW7gL4oZccYpht3O4dmVJC41" rel="stylesheet"/>
+In Postman, a mock is essentially a paired request and response saved to a collection. So it makes sense that we would first need to create a collection if we dont have one already. Lets use the [Postman API](https://docs.api.getpostman.com/) to create a new collection, and then create a new mock associated with that collection.
 
-    <link href="/bundles/onboarding-css?v=m1CDG8GUR5u_P3QvyzJOWHlZKrHcnVPf442vvOhB4h41" rel="stylesheet"/>
+**Requirements**
+* Postman API Key
 
+**Workflow** 
+1. Use the Postman API to [`POST` a new collection](https://docs.api.getpostman.com/#99810ef3-3cc0-a6cc-06f5-d8e2ae9d84e4)
+1. Use the Postman API to [`POST` a mock](https://docs.api.getpostman.com/#a54b358e-2686-bb4e-15c6-125b23776593)
 
-    
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+![[POST body](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-body2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-body2.png) 
 
+## Collections [/collections]
 
-    <!-- FAVICON START -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <!-- FAVICON END -->
+### Create collection [POST]
+This endpoint allows you to create collections using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
 
-</head>
-<body>
-    <div class="container onboarding-container">
-            <div class="onboarding-container-centered ">
-                
+On successful creation of the collection, the response returns the collection `name`, `id` and the `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
 
 
-
-<header class="flex flex-col align-center">
-    <div class="icon">
-        <a href="/">
-            <img class="mx-auto d-block" alt="APIMATIC logo" title="Welcome to APIMATIC" src="/imgs/apimatic-logo.svg" />
-        </a>
-    </div>
-    <div class="content">
-        <p>Login to your account</p>
-    </div>
-
-</header>
-<section class="form-wrapper flex flex-col">
-
-<form action="/account/login?ReturnUrl=%2Fapi%2Ftransform%3Fformat%3Dapiblueprint%26apikey%3DmONZg6E9hVHp7-WXsHucCGl-lXLvzN0t9GGEQ_s1xgrILHdXq_d50wEd8ptizzQN" id="loginForm" method="post" novalidate="True" role="form"><input name="__RequestVerificationToken" type="hidden" value="g4V6FdfGuXmGBJgsTPDiGanZD8zXyqg-5A_ALrCoERcSTx-G_0qcb8yAxYl2n3GYDsUuq0ky0tihPsxEJA5vOhVzy9SE-H1_GZJ5ndPo4i41" /><div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
-</ul></div>        <div class="form-group">
-            <label class="mb-1" for="signInInputEmail1">
-                Email
-            </label>
-            <input class="form-control form-control-sm" data-Validation="email" data-val="true" data-val-email="The Email Address field is not a valid e-mail address." data-val-required="Email is required" id="Email" name="Email" placeholder="Enter email here" required="required" tabindex="2" type="email" value="" />
-
-        </div>
-        <div class="form-group mb-0">
-            <label class="mb-1" for="signInInputPassword">
-                Password
-            </label>
-            <a class="forgot-password" href="/account/forgotpassword?Length=7">Forgot password?</a>
-            <input class="form-control extra-padding-right" data-title="Caps lock is on" data-toggle="tooltip" data-trigger="manual" data-val="true" data-val-required="Password is required" id="js-onboarding-password-field" name="Password" placeholder="Password" required="true" type="password" />
-            <i class="fa fa-eye onboarding-show-password-icon" id="js-onboarding-show-password-icon"></i>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input class="custom-control-input" data-val="true" data-val-required="The Remember me? field is required." id="customControlInline" name="RememberMe" tabindex="4" type="checkbox" value="true" /><input name="RememberMe" type="hidden" value="false" />
-                Remember me
-            </label>
-        </div>
-        <button type="submit" class="btn btn-primary btn-sm btn-block" tabindex="5">
-            Login
-        </button>
-        <a href="/account/register" class="btn btn-white btn-sm btn-block" tabindex="6">
-            Sign Up
-        </a>
-</form></section>
-
-            </div>
-    </div>
-</body>
-</html>
+    + Attributes (Create collection Request)
 
 
+    + Body
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+            {
+                "collection": {
+                    "info": {
+                        "name": "Demo collection for mocking",
+                        "description": "This is just a sample collection.",
+                        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+                    },
+                    "item": [
+                        {
+                            "name": "Sample POST Request",
+                            "request": {
+                                "url": "https://postman-echo.com/post",
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"data\": \"123\"}"
+                                },
+                                "description": "This is a sample POST Request"
+                            }
+                        },
+                        {
+                            "name": "Sample GET Request",
+                            "request": {
+                                "url": "https://postman-echo/get",
+                                "method": "GET",
+                                "description": "This is a sample GET Request"
+                            }
+                        }
+                    ]
+                }
+            }
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
 
-<script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
++ Response 200 (application/json; charset=utf-8)
 
-<script src="/bundles/front-js?v="></script>
+    + Headers
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-<script>
-    $.validate({
-        modules: 'date, security'
-    });
-</script>
-<script src="/bundles/onboarding-js?v=2h6We__p_84-tByynY6kDWiE-iuM8Pigjw1rycnNaQY1"></script>
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:109
+            Date:Wed, 23 Nov 2016 11:23:49 GMT
+            ETag:W/"89-p4nfYdFl+5DEKOdB5g399Q"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1479900267
+
+    + Attributes (Collection Created)
 
 
+    + Body
+
+            {"collection":{"id":"2412a72c-1d8e-491b-aced-93809c0e94e9","name":"Sample Collection","uid":"5852-2412a72c-1d8e-491b-aced-93809c0e94e9"}}
+
+
+
+## Mocks [/mocks]
+
+### Create mock [POST]
+This endpoint allows you to create a mock on a collection. You can also provide an environment UID to resolve any environment variables in the collection.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (Create mock Request)
+
+
+    + Body
+
+            {
+                "mock": {
+                    "collection": "{{collection_uid}}"
+                }
+            }
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:197
+            Date:Mon, 06 Mar 2017 15:36:31 GMT
+            ETag:W/"13d-ZYjjs3SUBAYM3G91RE5yBw"
+            Server:nginx/1.10.1
+            Vary:Accept-Encoding
+
+    + Attributes (Successful Response)
+
+
+    + Body
+
+            {"mock":{"id":"0fca2246-c108-41f5-8454-cc032def329f","owner":"1679925","uid":"1679925-0fca2246-c108-41f5-8454-cc032def329f","collection":"1679925-39fee52f-b806-3ffa-1173-00a6f5b183dc","environment":"1679925-0b9e9f15-3208-a2b1-22e0-d58392f01524","mockUrl":"https://0fca2246-c108-41f5-8454-cc032def329f.mock.pstmn.io"}}
+
+
+
+
+# Group Add a mock to an existing collection
+
+Add a mock response to an existing collection.
+
+Now say we already have a collection, and we want to add a mock to our collection. Same as the previous scenario, well just need our `collection_uid` first. 
+
+**Requirements**
+* Postman API Key
+* `collection_uid`
+
+**Workflow** 
+1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)
+1. Add a mock example to the collection (via Postman script)
+1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)
+  
+  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).
+
+  ![[add pre request](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-add-pre-request2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-add-pre-request2.png)
+
+## Collections By Collection Uid [/collections/{collection_uid}]
+
++ Parameters
+    + collection_uid (string, required)
+
+
+### Get collection [GET]
+Access the contents of a collection that is accessible to you using its unique id (`uid`).
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request 
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Date:Fri, 27 May 2016 21:37:31 GMT
+            ETag:W/"453-t7Du3QMg1i7hkk6S4e3NvA"
+            Server:nginx/1.8.1
+            Vary:Accept-Encoding
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1464385067
+            transfer-encoding:chunked
+
+    + Attributes (Valid Response)
+
+
+    + Body
+
+            {"collection":{"variables":[],"info":{"name":"Sample Collection","_postman_id":"f2e66c2e-5297-e4a5-739e-20cbb90900e3","description":"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.","schema":"https://schema.getpostman.com/json/collection/v2.0.0/collection.json"},"item":[{"id":"82ee981b-e19f-962a-401e-ea34ebfb4848","name":"Request Headers","event":[{"listen":"test","script":{"type":"text/javascript","exec":"var responseJSON;\ntry {\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    responseJSON = JSON.parse(responseBody);\n    tests[\"Header contains host\"] = \"host\" in responseJSON.headers;\n    tests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in responseJSON.headers;\n}\ncatch (e) { }\n\n\n\n"}}],"request":{"url":"https://echo.getpostman.com/headers","method":"GET","header":[{"key":"my-sample-header","value":"Lorem ipsum dolor sit amet","description":""}],"body":{"mode":"formdata","formdata":[]},"description":""},"response":[]}]}}
+
+
+### Update collection with new mock [PUT]
+**Sample mock to update `mockToAdd` environment variable:**
+
+```     
+{
+        "name": "Sample GET Request",
+        "request": {
+          "url": "https://27d0d329-7f20-4019-9931-8ba52dd44698.mock.pstmn.io/example1",
+          "method": "GET",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"data\": \"123\"}"
+          },
+          "description": "This is a sample GET Request"
+        },
+        "response": [
+          {
+            "name": "example1",
+            "originalRequest": {
+              "method": "GET",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": ""
+              }
+            },
+            "url": {
+              "raw": "{{url}}/example1",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "example1"
+              ]
+            },
+            "code": 200,
+            "_postman_previewlanguage": null,
+            "headers": [],
+            "cookies": [],
+            "body": "first example response"
+          }
+        ]
+      }
+```
+
+This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
+
+On successful updation of the collection, the response returns the collection `name`, `id` and `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
+Note: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (string)
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:110
+            Date:Wed, 23 Nov 2016 12:03:23 GMT
+            ETag:W/"89-Tuf/A5YFyf5ewpKKrb1Zww"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:56
+            X-RateLimit-Reset:1479902614
+
+    + Attributes (Collection Updated)
+
+
+    + Body
+
+            {"collection":{"id":"1d3daef4-2037-4584-ab86-bafd8c8f8a55","name":"Sample Collection","uid":"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55"}}
+
+
+
+
+# Group Generate new mock for existing collection
+
+Generate a new mock for an existing collection.
+
+This is the same as the previous Add a mock to an existing collection scenario, except you can generate or retrieve information to update the mock example.
+
+**Requirements**
+* Postman API Key
+* `collection_uid`
+
+**Workflow** 
+1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)
+1. Perform calculations or generate data (via Postman script)
+1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)
+  
+  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).
+
+  ![[update pre request script](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-pre-request2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-pre-request2.png)
+
+## Collections By Collection Uid [/collections/{collection_uid}]
+
++ Parameters
+    + collection_uid (string, required)
+
+
+### Get collection [GET]
+Access the contents of a collection that is accessible to you using its unique id (`uid`).
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request 
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Date:Fri, 27 May 2016 21:37:31 GMT
+            ETag:W/"453-t7Du3QMg1i7hkk6S4e3NvA"
+            Server:nginx/1.8.1
+            Vary:Accept-Encoding
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1464385067
+            transfer-encoding:chunked
+
+    + Attributes (Valid Response)
+
+
+    + Body
+
+            {"collection":{"variables":[],"info":{"name":"Sample Collection","_postman_id":"f2e66c2e-5297-e4a5-739e-20cbb90900e3","description":"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.","schema":"https://schema.getpostman.com/json/collection/v2.0.0/collection.json"},"item":[{"id":"82ee981b-e19f-962a-401e-ea34ebfb4848","name":"Request Headers","event":[{"listen":"test","script":{"type":"text/javascript","exec":"var responseJSON;\ntry {\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    responseJSON = JSON.parse(responseBody);\n    tests[\"Header contains host\"] = \"host\" in responseJSON.headers;\n    tests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in responseJSON.headers;\n}\ncatch (e) { }\n\n\n\n"}}],"request":{"url":"https://echo.getpostman.com/headers","method":"GET","header":[{"key":"my-sample-header","value":"Lorem ipsum dolor sit amet","description":""}],"body":{"mode":"formdata","formdata":[]},"description":""},"response":[]}]}}
+
+
+### Update collection with generated mock [PUT]
+This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
+
+On successful updation of the collection, the response returns the collection `name`, `id` and `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
+Note: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (string)
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:110
+            Date:Wed, 23 Nov 2016 12:03:23 GMT
+            ETag:W/"89-Tuf/A5YFyf5ewpKKrb1Zww"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:56
+            X-RateLimit-Reset:1479902614
+
+    + Attributes (Collection Updated)
+
+
+    + Body
+
+            {"collection":{"id":"1d3daef4-2037-4584-ab86-bafd8c8f8a55","name":"Sample Collection","uid":"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55"}}
+
+
+
+
+# Group Update a mock response for an existing collection
+
+Update a mock response for an existing collection.
+
+This is the same as the Add a mock to an existing collection scenario, except you will first search for an existing mock example to replace.
+
+**Requirements**
+* Postman API Key
+* `collection_uid`
+
+**Workflow** 
+1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)
+1. Find and update mock example in collection json (via Postman script)
+1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)
+  
+  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).
+
+  ![[update with search](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-search2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-search2.png)
+
+## Collections By Collection Uid [/collections/{collection_uid}]
+
++ Parameters
+    + collection_uid (string, required)
+
+
+### Get collection [GET]
+Access the contents of a collection that is accessible to you using its unique id (`uid`).
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request 
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Date:Fri, 27 May 2016 21:37:31 GMT
+            ETag:W/"453-t7Du3QMg1i7hkk6S4e3NvA"
+            Server:nginx/1.8.1
+            Vary:Accept-Encoding
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1464385067
+            transfer-encoding:chunked
+
+    + Attributes (Valid Response)
+
+
+    + Body
+
+            {"collection":{"variables":[],"info":{"name":"Sample Collection","_postman_id":"f2e66c2e-5297-e4a5-739e-20cbb90900e3","description":"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.","schema":"https://schema.getpostman.com/json/collection/v2.0.0/collection.json"},"item":[{"id":"82ee981b-e19f-962a-401e-ea34ebfb4848","name":"Request Headers","event":[{"listen":"test","script":{"type":"text/javascript","exec":"var responseJSON;\ntry {\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    responseJSON = JSON.parse(responseBody);\n    tests[\"Header contains host\"] = \"host\" in responseJSON.headers;\n    tests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in responseJSON.headers;\n}\ncatch (e) { }\n\n\n\n"}}],"request":{"url":"https://echo.getpostman.com/headers","method":"GET","header":[{"key":"my-sample-header","value":"Lorem ipsum dolor sit amet","description":""}],"body":{"mode":"formdata","formdata":[]},"description":""},"response":[]}]}}
+
+
+### Update collection by updating mock [PUT]
+**Sample mock to update `mockToAdd` environment variable:**
+```
+     {
+        "name": "Sample GET Request",
+        "request": {
+          "url": "https://27d0d329-7f20-4019-9931-8ba52dd44698.mock.pstmn.io/example1",
+          "method": "GET",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"data\": \"123\"}"
+          },
+          "description": "This is a sample GET Request"
+        },
+        "response": [
+          {
+            "name": "example1",
+            "originalRequest": {
+              "method": "GET",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": ""
+              }
+            },
+            "url": {
+              "raw": "{{url}}/example1",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "example1"
+              ]
+            },
+            "code": 200,
+            "_postman_previewlanguage": null,
+            "headers": [],
+            "cookies": [],
+            "body": "first example response"
+          }
+        ]
+      }
+```
+
+This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
+
+On successful updation of the collection, the response returns the collection `name`, `id` and `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
+Note: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (string)
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:110
+            Date:Wed, 23 Nov 2016 12:03:23 GMT
+            ETag:W/"89-Tuf/A5YFyf5ewpKKrb1Zww"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:56
+            X-RateLimit-Reset:1479902614
+
+    + Attributes (Collection Updated)
+
+
+    + Body
+
+            {"collection":{"id":"1d3daef4-2037-4584-ab86-bafd8c8f8a55","name":"Sample Collection","uid":"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55"}}
+
+
+
+
+# Group Transfer value from request to response
+
+Transfer value from the request to the response.
+
+This is the same as the Generate a new mock for an existing collection scenario, except you can enter data in a Postman request that will execute before this request to update the mock example (instead of entering data in the environment variable editor).
+
+**Requirements**
+* Postman API Key
+* `collection_uid`
+
+**Workflow** 
+1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)
+1. Retrieve data, for example from a [`POST` request to sample Echo collection](https://docs.postman-echo.com/#083e46e7-53ea-87b1-8104-f8917ce58a17). Can also utilize a previous request to another endpoint or retrieve data via a Postman script like  [`pm.sendRequest()`](https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference#pmsendrequest).
+1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)
+  
+  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).
+
+  ![[post request form](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-form2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-form2.png)
+
+## Post [/post]
+
+### Echo to POST Form Data [POST]
+The HTTP `POST` request method is meant to transfer data to a server 
+(and elicit a response). What data is returned depends on the implementation
+of the server.
+
+A `POST` request can pass parameters to the server using "Query String 
+Parameters", as well as the Request Body. For example, in the following request,
+
+> POST /hi/there?hand=wave
+>
+> <request-body>
+
+The parameter "hand" has the value "wave". The request body can be in multiple
+formats. These formats are defined by the MIME type of the request. The MIME 
+Type can be set using the ``Content-Type`` HTTP header. The most commonly used 
+MIME types are:
+
+* `multipart/form-data`
+* `application/x-www-form-urlencoded`
+* `application/json`
+
+This endpoint echoes the HTTP headers, request parameters, the contents of
+the request body and the complete URI requested when data is sent as a form parameter.
++ Attributes
+    + foo1 (string, required)
+
+        + Sample: this-new-value
+    + foo2 (string, required)
+
+        + Sample: how-about-this-now
+
++ Request (application/x-www-form-urlencoded)
+
+
+
+
++ Response 200 
+
+
+
+
+## Collections By Collection Uid [/collections/{collection_uid}]
+
++ Parameters
+    + collection_uid (string, required)
+
+
+### Get collection [GET]
+Access the contents of a collection that is accessible to you using its unique id (`uid`).
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request 
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Date:Fri, 27 May 2016 21:37:31 GMT
+            ETag:W/"453-t7Du3QMg1i7hkk6S4e3NvA"
+            Server:nginx/1.8.1
+            Vary:Accept-Encoding
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1464385067
+            transfer-encoding:chunked
+
+    + Attributes (Valid Response)
+
+
+    + Body
+
+            {"collection":{"variables":[],"info":{"name":"Sample Collection","_postman_id":"f2e66c2e-5297-e4a5-739e-20cbb90900e3","description":"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.","schema":"https://schema.getpostman.com/json/collection/v2.0.0/collection.json"},"item":[{"id":"82ee981b-e19f-962a-401e-ea34ebfb4848","name":"Request Headers","event":[{"listen":"test","script":{"type":"text/javascript","exec":"var responseJSON;\ntry {\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    responseJSON = JSON.parse(responseBody);\n    tests[\"Header contains host\"] = \"host\" in responseJSON.headers;\n    tests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in responseJSON.headers;\n}\ncatch (e) { }\n\n\n\n"}}],"request":{"url":"https://echo.getpostman.com/headers","method":"GET","header":[{"key":"my-sample-header","value":"Lorem ipsum dolor sit amet","description":""}],"body":{"mode":"formdata","formdata":[]},"description":""},"response":[]}]}}
+
+
+### Update collection with request data [PUT]
+This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
+
+On successful updation of the collection, the response returns the collection `name`, `id` and `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
+Note: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (string)
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:110
+            Date:Wed, 23 Nov 2016 12:03:23 GMT
+            ETag:W/"89-Tuf/A5YFyf5ewpKKrb1Zww"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:56
+            X-RateLimit-Reset:1479902614
+
+    + Attributes (Collection Updated)
+
+
+    + Body
+
+            {"collection":{"id":"1d3daef4-2037-4584-ab86-bafd8c8f8a55","name":"Sample Collection","uid":"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55"}}
+
+
+
+
+# Group Return a response based on the request
+
+If you have a number of examples saved to a Postman mock, the [Postman matching algorithm](https://www.getpostman.com/docs/v6/postman/mock_servers/matching_algorithm) has a predictable way to retrieve the desired response. You can do this either in the Postman app or using the Postman API.
+
+Configurable elements to retrieve a response:
+* `requestMethod` - any valid HTTP request method of a saved example (e.g. `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to select as part of your request
+* `mockPath`  - any valid string path of a saved example (e.g. `/`, `/test`, `/test/path`, `/test/path/1`) to include as part of your request URL
+* `x-mock-response-name` - optional header with the name of a saved example
+* `x-mock-response-id` - optional header with the uid of a saved example
+
+![[mocks matching algorithm](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-matching-algo2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-matching-algo2.png)
+
+## By MockPath [/{mockPath}]
+
++ Parameters
+    + mockPath (string, required)
+
+
+### Request to mock endpoint [GET]
+An example request to a mock endpoint that includes configurable variables to retrieve a desired response.
+
++ Request 
+    + Headers
+
+            x-api-key:{{postman_api_key}}
+            x-mock-response-code:{{desired_response_code}}
+            x-mock-response-id:{{desired_response_uid}}
+
+
+
+
+
++ Response 200 
+
+
+
+
+
+# Data Structures
+
+## Create collection Request (object)
+
+
+### Properties
++ `collection` (Collection, required) 
+
+
+## Collection (object)
+
+
+### Properties
++ `info` (Info, required) 
++ `item` (array[Item], required) 
+
+
+## Info (object)
+
+
+### Properties
++ `name` (string, required) 
++ `description` (string, required) 
++ `schema` (string, required) 
+
+
+## Item (object)
+
+
+### Properties
++ `name` (string, required) 
++ `request` (Request, required) 
+
+
+## Request (object)
+
+
+### Properties
++ `url` (string, required) 
++ `method` (string, required) 
++ `header` (array[Header], optional) 
++ `body` (Body, optional) 
++ `description` (string, required) 
+
+
+## Header (object)
+
+
+### Properties
++ `key` (string, required) 
++ `value` (string, required) 
+
+
+## Body (object)
+
+
+### Properties
++ `mode` (string, required) 
++ `raw` (string, required) 
+
+
+## Collection Created (object)
+
+
+### Properties
++ `collection` (Collection1, required) 
+
+
+## Collection1 (object)
+
+
+### Properties
++ `id` (string, required) 
++ `name` (string, required) 
++ `uid` (string, required) 
+
+
+## Create mock Request (object)
+
+
+### Properties
++ `mock` (Mock, required) 
+
+
+## Mock (object)
+
+
+### Properties
++ `collection` (string, required) 
+
+
+## Successful Response (object)
+
+
+### Properties
++ `mock` (Mock1, required) 
+
+
+## Mock1 (object)
+
+
+### Properties
++ `id` (string, required) 
++ `owner` (string, required) 
++ `uid` (string, required) 
++ `collection` (string, required) 
++ `environment` (string, required) 
++ `mockUrl` (string, required) 
+
+
+## Valid Response (object)
+
+
+### Properties
++ `collection` (Collection2, required) 
+
+
+## Collection2 (object)
+
+
+### Properties
++ `variables` (array[string], required) 
++ `info` (Info1, required) 
++ `item` (array[Item1], required) 
+
+
+## Info1 (object)
+
+
+### Properties
++ `name` (string, required) 
++ `_postman_id` (string, required) 
++ `description` (string, required) 
++ `schema` (string, required) 
+
+
+## Item1 (object)
+
+
+### Properties
++ `id` (string, required) 
++ `name` (string, required) 
++ `event` (array[Event], required) 
++ `request` (Request1, required) 
++ `response` (array[string], required) 
+
+
+## Event (object)
+
+
+### Properties
++ `listen` (string, required) 
++ `script` (Script, required) 
+
+
+## Script (object)
+
+
+### Properties
++ `type` (string, required) 
++ `exec` (string, required) 
+
+
+## Request1 (object)
+
+
+### Properties
++ `url` (string, required) 
++ `method` (string, required) 
++ `header` (array[Header1], required) 
++ `body` (Body1, required) 
++ `description` (string, required) 
+
+
+## Header1 (object)
+
+
+### Properties
++ `key` (string, required) 
++ `value` (string, required) 
++ `description` (string, required) 
+
+
+## Body1 (object)
+
+
+### Properties
++ `mode` (string, required) 
++ `formdata` (array[string], required) 
+
+
+## Collection Updated (object)
+
+
+### Properties
++ `collection` (Collection1, required) 
 
