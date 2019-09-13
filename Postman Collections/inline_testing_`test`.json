@@ -144,6 +144,77 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "www.google.com {{url}} hbjhbn Copy",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "67220e2b-93c4-4f84-9232-514b4d8981b5",
+                "exec": [
+                  "sccsscsc"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "16ac483f-9358-4e7e-b97e-17302b37d315",
+                "exec": [
+                  "cdcsc"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "807753c1-3e7b-4719-8f67-c1194493dd54",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "ad",
+                "value": "dd",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "dcsccscs",
+              "options": {}
+            },
+            "url": {
+              "raw": "www.google.com?asd=asd&d=d&d=",
+              "host": [
+                "www",
+                "google",
+                "com"
+              ],
+              "query": [
+                {
+                  "key": "asd",
+                  "value": "asd",
+                  "type": "text"
+                },
+                {
+                  "key": "d",
+                  "value": "d",
+                  "type": "text"
+                },
+                {
+                  "key": "d",
+                  "value": "",
+                  "type": "text"
+                }
+              ]
+            },
+            "description": "this can be a `marked dow desc` also *but* not **in caps**\n\n{{url}}"
+          },
+          "response": []
         }
       ],
       "_postman_id": "6c39a169-5464-497b-9987-064d0b915dec",
