@@ -314,7 +314,8 @@
       "example": {
         "username": "{{nonRbacUserPrefix}}",
         "email": "{{nonRbacUserPrefix}}@postman.com",
-        "password": "{{nonRbacUserPrefix}}"
+        "password": "{{nonRbacUserPrefix}}",
+        "silent": true
       },
       "type": "object",
       "properties": {
@@ -326,12 +327,16 @@
         },
         "password": {
           "type": "string"
+        },
+        "silent": {
+          "type": "boolean"
         }
       },
       "required": [
         "username",
         "email",
-        "password"
+        "password",
+        "silent"
       ]
     },
     "CreateRBACUserRequest": {
