@@ -30,7 +30,7 @@
         "tags": [
           "Setup"
         ],
-        "operationId": "ApiSignupPost",
+        "operationId": "Createnon-RBACUser",
         "deprecated": false,
         "produces": [
           "application/json"
@@ -68,7 +68,7 @@
         "tags": [
           "Setup"
         ],
-        "operationId": "ApiUsersMigrateApiVersionByRbacUserIdPut",
+        "operationId": "MigrateUsertoRBAC",
         "deprecated": false,
         "produces": [
           "application/json"
@@ -134,7 +134,7 @@
         "tags": [
           "List Entities"
         ],
-        "operationId": "V1ListPost",
+        "operationId": "GetTeamforUserID",
         "deprecated": false,
         "produces": [
           "application/json"
@@ -186,7 +186,7 @@
         "tags": [
           "Teardown"
         ],
-        "operationId": "ApiUsersDeleteAccountByRbacUserIdPost",
+        "operationId": "DeleteRBACUser",
         "deprecated": false,
         "produces": [
           "application/json"
@@ -250,7 +250,7 @@
         "tags": [
           "Teardown"
         ],
-        "operationId": "ApiUsersDeleteAccountByNonRbacUserIdPost",
+        "operationId": "Deletenon-RBACUser",
         "deprecated": false,
         "produces": [
           "application/json"
