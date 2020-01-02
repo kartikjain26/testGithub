@@ -25,7 +25,6 @@
   "paths": {
     "/api/signup": {
       "post": {
-        "description": "TODO: Add Description",
         "summary": "Create non-RBAC User",
         "tags": [
           "Setup"
@@ -63,7 +62,6 @@
     },
     "/api/users/{RbacUserId}/migrate_api_version": {
       "put": {
-        "description": "TODO: Add Description",
         "summary": "Migrate User to RBAC",
         "tags": [
           "Setup"
@@ -129,7 +127,6 @@
     },
     "/v1/list": {
       "post": {
-        "description": "TODO: Add Description",
         "summary": "Get Team for User ID",
         "tags": [
           "List Entities"
@@ -167,6 +164,7 @@
             "required": true,
             "description": "",
             "schema": {
+              "example": "{\n\t\"users\": [{{userID}}]\n}",
               "type": "string"
             }
           }
@@ -181,7 +179,6 @@
     },
     "/api/users/{RbacUserId}/delete_account": {
       "post": {
-        "description": "TODO: Add Description",
         "summary": "Delete RBAC User",
         "tags": [
           "Teardown"
@@ -245,7 +242,6 @@
     },
     "/api/users/{nonRbacUserId}/delete_account": {
       "post": {
-        "description": "TODO: Add Description",
         "summary": "Delete non-RBAC User",
         "tags": [
           "Teardown"
