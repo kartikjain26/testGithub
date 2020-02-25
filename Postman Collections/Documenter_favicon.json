@@ -95,6 +95,39 @@
         "url": "localhost:1337/api/collection/12136/r"
       },
       "response": []
+    },
+    {
+      "name": "new r1",
+      "_postman_id": "f60a7676-2e29-4107-b13e-ac6f294c00ec",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "new r1"
+      },
+      "response": []
+    },
+    {
+      "name": "new r2",
+      "_postman_id": "3d30b91e-e56f-441d-be9c-e4cf0408ecaf",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "this is some text",
+          "options": {
+            "raw": {}
+          }
+        },
+        "url": "new r2"
+      },
+      "response": []
     }
   ]
 }
