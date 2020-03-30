@@ -130,7 +130,7 @@
           "raw": "this is some text",
           "options": {
             "raw": {
-              "language": "json"
+              "language": "html"
             }
           }
         },
