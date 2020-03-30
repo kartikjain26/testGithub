@@ -117,12 +117,21 @@
       },
       "request": {
         "method": "POST",
-        "header": [],
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "text/plain",
+            "type": "text"
+          }
+        ],
         "body": {
           "mode": "raw",
           "raw": "this is some text",
           "options": {
-            "raw": {}
+            "raw": {
+              "language": "text"
+            }
           }
         },
         "url": "new r2"
