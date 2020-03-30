@@ -121,8 +121,8 @@
           {
             "key": "Content-Type",
             "name": "Content-Type",
-            "value": "text/plain",
-            "type": "text"
+            "type": "text",
+            "value": "text/plain"
           }
         ],
         "body": {
@@ -130,7 +130,7 @@
           "raw": "this is some text",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
