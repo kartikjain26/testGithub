@@ -137,6 +137,54 @@
         "url": "new r22"
       },
       "response": []
+    },
+    {
+      "name": "https://sync-v4.getpostman.com/collection/:id/size",
+      "_postman_id": "2f9c7932-1748-4125-af7b-b9e3dba95d94",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-access-token",
+            "value": "5a1cc264af888561332494274c99591f79552ba5e3e26ddb1db3456e05b39988b8c2c430df2a6825865db78811a6c5f7412acc4189f96a05ae2245e6e3cde690",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://sync-v4.getpostman.com/collection/:id/size",
+          "protocol": "https",
+          "host": [
+            "sync-v4",
+            "getpostman",
+            "com"
+          ],
+          "path": [
+            "collection",
+            ":id",
+            "size"
+          ],
+          "query": [
+            {
+              "key": "",
+              "value": "",
+              "type": "text",
+              "disabled": true
+            }
+          ],
+          "variable": [
+            {
+              "id": "6fa72139-2d59-40eb-878b-4b064d1db646",
+              "key": "id",
+              "value": "4518432-aa37a8ed-f5ae-4655-82fa-794460053202",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
