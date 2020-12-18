@@ -1,2156 +1,999 @@
+FORMAT: 1A
+HOST: https://api.getpostman.com
+
+# MOCKS: fake it till you make it
+### Get Started
+
+1. **Get Postman API Key**: to get your Postman API key, log in to the [Postman web dashboard](https://app.getpostman.com/). Select the workspace that you'd like to work in, and tab over to the Integrations page. 
+  
+  ![[integrations page](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-integrations-page.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-integrations-page.png)
+
+  Toggle over to "Browse Integrations", view details about the Postman API, and hit **Get API Key**. Copy and paste this value into a [Postman environment](https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_environments).
+  
+  ![[Postman API page](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-api-key.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-api-key.png)
+1. **Update Postman environment**: [create and update an environment](https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_environments) to store required variables.
+1. **Run the collection or folder**: to [run the collection or folder](https://www.getpostman.com/docs/v6/postman/collection_runs/intro_to_collection_runs), click on the arrow (&#9658;) next to the collection name to expand the collection details. Click the blue **Run** button to open the Collection Runner in a separate window. 
+  
+  Select the collection or folder you wish to run. Select the environment to run it against, if you are using one. When you're ready to run the collection or folder, hit the blue **Run** button.
+
+# Group Create a mock from scratch
+
+Create a new collection and mock endpoint.
+
+In Postman, a mock is essentially a paired request and response saved to a collection. So it makes sense that we would first need to create a collection if we dont have one already. Lets use the [Postman API](https://docs.api.getpostman.com/) to create a new collection, and then create a new mock associated with that collection.
+
+**Requirements**
+* Postman API Key
+
+**Workflow** 
+1. Use the Postman API to [`POST` a new collection](https://docs.api.getpostman.com/#99810ef3-3cc0-a6cc-06f5-d8e2ae9d84e4)
+1. Use the Postman API to [`POST` a mock](https://docs.api.getpostman.com/#a54b358e-2686-bb4e-15c6-125b23776593)
+
+![[POST body](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-body2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-body2.png) 
+
+## Collections [/collections]
+
+### Create collection [POST]
+This endpoint allows you to create collections using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
+
+On successful creation of the collection, the response returns the collection `name`, `id` and the `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (Create collection Request)
+
+
+    + Body
+
+            {
+                "collection": {
+                    "info": {
+                        "name": "Demo collection for mocking",
+                        "description": "This is just a sample collection.",
+                        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+                    },
+                    "item": [
+                        {
+                            "name": "Sample POST Request",
+                            "request": {
+                                "url": "https://postman-echo.com/post",
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"data\": \"123\"}"
+                                },
+                                "description": "This is a sample POST Request"
+                            }
+                        },
+                        {
+                            "name": "Sample GET Request",
+                            "request": {
+                                "url": "https://postman-echo/get",
+                                "method": "GET",
+                                "description": "This is a sample GET Request"
+                            }
+                        }
+                    ]
+                }
+            }
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:109
+            Date:Wed, 23 Nov 2016 11:23:49 GMT
+            ETag:W/"89-p4nfYdFl+5DEKOdB5g399Q"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1479900267
+
+    + Attributes (Collection Created)
+
+
+    + Body
+
+            {"collection":{"id":"2412a72c-1d8e-491b-aced-93809c0e94e9","name":"Sample Collection","uid":"5852-2412a72c-1d8e-491b-aced-93809c0e94e9"}}
+
+
+
+## Mocks [/mocks]
+
+### Create mock [POST]
+This endpoint allows you to create a mock on a collection. You can also provide an environment UID to resolve any environment variables in the collection.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (Create mock Request)
+
+
+    + Body
+
+            {
+                "mock": {
+                    "collection": "{{collection_uid}}"
+                }
+            }
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:197
+            Date:Mon, 06 Mar 2017 15:36:31 GMT
+            ETag:W/"13d-ZYjjs3SUBAYM3G91RE5yBw"
+            Server:nginx/1.10.1
+            Vary:Accept-Encoding
+
+    + Attributes (Successful Response)
+
+
+    + Body
+
+            {"mock":{"id":"0fca2246-c108-41f5-8454-cc032def329f","owner":"1679925","uid":"1679925-0fca2246-c108-41f5-8454-cc032def329f","collection":"1679925-39fee52f-b806-3ffa-1173-00a6f5b183dc","environment":"1679925-0b9e9f15-3208-a2b1-22e0-d58392f01524","mockUrl":"https://0fca2246-c108-41f5-8454-cc032def329f.mock.pstmn.io"}}
+
+
+
+
+# Group Add a mock to an existing collection
+
+Add a mock response to an existing collection.
+
+Now say we already have a collection, and we want to add a mock to our collection. Same as the previous scenario, well just need our `collection_uid` first. 
+
+**Requirements**
+* Postman API Key
+* `collection_uid`
+
+**Workflow** 
+1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)
+1. Add a mock example to the collection (via Postman script)
+1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)
+  
+  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).
+
+  ![[add pre request](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-add-pre-request2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-add-pre-request2.png)
+
+## Collections By Collection Uid [/collections/{collection_uid}]
+
++ Parameters
+    + collection_uid (string, required)
+
+
+### Get collection [GET]
+Access the contents of a collection that is accessible to you using its unique id (`uid`).
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request 
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Date:Fri, 27 May 2016 21:37:31 GMT
+            ETag:W/"453-t7Du3QMg1i7hkk6S4e3NvA"
+            Server:nginx/1.8.1
+            Vary:Accept-Encoding
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1464385067
+            transfer-encoding:chunked
+
+    + Attributes (Valid Response)
+
+
+    + Body
+
+            {"collection":{"variables":[],"info":{"name":"Sample Collection","_postman_id":"f2e66c2e-5297-e4a5-739e-20cbb90900e3","description":"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.","schema":"https://schema.getpostman.com/json/collection/v2.0.0/collection.json"},"item":[{"id":"82ee981b-e19f-962a-401e-ea34ebfb4848","name":"Request Headers","event":[{"listen":"test","script":{"type":"text/javascript","exec":"var responseJSON;\ntry {\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    responseJSON = JSON.parse(responseBody);\n    tests[\"Header contains host\"] = \"host\" in responseJSON.headers;\n    tests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in responseJSON.headers;\n}\ncatch (e) { }\n\n\n\n"}}],"request":{"url":"https://echo.getpostman.com/headers","method":"GET","header":[{"key":"my-sample-header","value":"Lorem ipsum dolor sit amet","description":""}],"body":{"mode":"formdata","formdata":[]},"description":""},"response":[]}]}}
+
+
+### Update collection with new mock [PUT]
+**Sample mock to update `mockToAdd` environment variable:**
+
+```     
 {
-  "info": {
-    "_postman_id": "4518432-58e8f2b7-a92e-45e1-872f-1d405ab6cf59",
-    "name": "MOCKS: fake it till you make it",
-    "description": "### Get Started\n\n1. **Get Postman API Key**: to get your Postman API key, log in to the [Postman web dashboard](https://app.getpostman.com/). Select the workspace that you'd like to work in, and tab over to the Integrations page. \n  \n  ![[integrations page](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-integrations-page.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-integrations-page.png)\n\n  Toggle over to \"Browse Integrations\", view details about the Postman API, and hit **Get API Key**. Copy and paste this value into a [Postman environment](https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_environments).\n  \n  ![[Postman API page](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-api-key.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-api-key.png)\n1. **Update Postman environment**: [create and update an environment](https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_environments) to store required variables.\n1. **Run the collection or folder**: to [run the collection or folder](https://www.getpostman.com/docs/v6/postman/collection_runs/intro_to_collection_runs), click on the arrow (&#9658;) next to the collection name to expand the collection details. Click the blue **Run** button to open the Collection Runner in a separate window. \n  \n  Select the collection or folder you wish to run. Select the environment to run it against, if you are using one. When you're ready to run the collection or folder, hit the blue **Run** button.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Create a mock from scratch",
-      "item": [
-        {
-          "name": "Create collection",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response json data should not have errors\", function () {",
-                  "    pm.response.to.have.jsonBody();",
-                  "    pm.response.to.not.have.jsonBody('error');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should contain one collection\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection').and.be.an('object');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should return collection details\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection')",
-                  "        .and.to.include.keys(['id', 'name', 'uid']);",
-                  "    ",
-                  "    // set environment variables to be used in subsequent requests",
-                  "    pm.environment.set(\"collection_id\", pm.response.json().collection.id);",
-                  "    pm.environment.set(\"collection_uid\", pm.response.json().collection.uid);",
-                  "    pm.environment.set(\"collection_name\", pm.response.json().collection.name);",
-                  "    ",
-                  "    // open the Postman console to view log statements",
-                  "    console.log(\"Setting collection_id: \" + pm.response.json().collection.id);",
-                  "    console.log(\"Setting collection_uid: \" + pm.response.json().collection.uid);",
-                  "    console.log(\"Setting collection_name: \" + pm.response.json().collection.name);",
-                  "});",
-                  "",
-                  "// additional tests to ensure that the relevant environment variables are present",
-                  "pm.test('\"postman_api_key\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('postman_api_key')).to.be.a('string');",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "_postman_id": "4518432-2c06ac9c-923a-4822-aa54-2ebeeada57ff",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"collection\": {\n    \"info\": {\n      \"name\": \"Demo collection for mocking\",\n      \"description\": \"This is just a sample collection.\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\"\n    },\n    \"item\": [\n          {\n            \"name\": \"Sample POST Request\",\n            \"request\": {\n              \"url\": \"https://postman-echo.com/post\",\n              \"method\": \"POST\",\n              \"header\": [\n                {\n                  \"key\": \"Content-Type\",\n                  \"value\": \"application/json\"\n                }\n              ],\n              \"body\": {\n                \"mode\": \"raw\",\n                \"raw\": \"{\\\"data\\\": \\\"123\\\"}\"\n              },\n              \"description\": \"This is a sample POST Request\"\n            }\n      },\n      {\n        \"name\": \"Sample GET Request\",\n        \"request\": {\n          \"url\": \"https://postman-echo/get\",\n          \"method\": \"GET\",\n          \"description\": \"This is a sample GET Request\"\n        }\n      }\n    ]\n  }\n}"
-            },
-            "url": "https://api.getpostman.com/collections",
-            "description": "This endpoint allows you to create collections using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).\n\nOn successful creation of the collection, the response returns the collection `name`, `id` and the `uid`.\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter."
+        "name": "Sample GET Request",
+        "request": {
+          "url": "https://27d0d329-7f20-4019-9931-8ba52dd44698.mock.pstmn.io/example1",
+          "method": "GET",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"data\": \"123\"}"
           },
-          "response": [
-            {
-              "id": "4518432-11241ff0-9b90-4d9a-9d91-99b9fe929129",
-              "name": "Collection Created",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"collection\": {\n    \"variables\": [],\n    \"info\": {\n      \"name\": \"Sample Collection\",\n      \"description\": \"This is just a sample collection.\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.0.0/collection.json\"\n    },\n    \"item\": [\n      {\n        \"name\": \"This is a folder\",\n        \"description\": \"\",\n        \"item\": [\n          {\n            \"name\": \"Sample POST Request\",\n            \"request\": {\n              \"url\": \"echo.getpostman.com/post\",\n              \"method\": \"POST\",\n              \"header\": [\n                {\n                  \"key\": \"Content-Type\",\n                  \"value\": \"application/json\",\n                  \"description\": \"\"\n                }\n              ],\n              \"body\": {\n                \"mode\": \"raw\",\n                \"raw\": \"{\\n\\t\\\"data\\\": \\\"123\\\"\\n}\"\n              },\n              \"description\": \"This is a sample POST Request\"\n            },\n            \"response\": []\n          }\n        ]\n      },\n      {\n        \"name\": \"Sample GET Request\",\n        \"request\": {\n          \"url\": \"echo.getpostman.com/get\",\n          \"method\": \"GET\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"formdata\": []\n          },\n          \"description\": \"This is a sample GET Request\"\n        },\n        \"response\": []\n      }\n    ]\n  }\n}"
-                },
-                "url": "https://api.getpostman.com/collections"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "name": "Access-Control-Allow-Credentials",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "name": "Access-Control-Allow-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "name": "Access-Control-Allow-Methods",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "name": "Access-Control-Allow-Origin",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "name": "Access-Control-Expose-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "name": "Connection",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "name": "Content-Encoding",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "109",
-                  "name": "Content-Length",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "name": "Content-Type",
-                  "description": ""
-                },
-                {
-                  "key": "Date",
-                  "value": "Wed, 23 Nov 2016 11:23:49 GMT",
-                  "name": "Date",
-                  "description": ""
-                },
-                {
-                  "key": "ETag",
-                  "value": "W/\"89-p4nfYdFl+5DEKOdB5g399Q\"",
-                  "name": "ETag",
-                  "description": ""
-                },
-                {
-                  "key": "Server",
-                  "value": "nginx/1.8.0",
-                  "name": "Server",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Limit",
-                  "value": "60",
-                  "name": "X-RateLimit-Limit",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Remaining",
-                  "value": "57",
-                  "name": "X-RateLimit-Remaining",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Reset",
-                  "value": "1479900267",
-                  "name": "X-RateLimit-Reset",
-                  "description": ""
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"collection\":{\"id\":\"2412a72c-1d8e-491b-aced-93809c0e94e9\",\"name\":\"Sample Collection\",\"uid\":\"5852-2412a72c-1d8e-491b-aced-93809c0e94e9\"}}"
-            }
-          ]
+          "description": "This is a sample GET Request"
         },
-        {
-          "name": "Create mock",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "    ",
-                  "    // set environment variables ",
-                  "    pm.environment.set(\"mock_uid\", pm.response.json().mock.uid);",
-                  "    pm.environment.set(\"url\", pm.response.json().mock.mockUrl);",
-                  "    ",
-                  "    // open the Postman console to view log statements",
-                  "    console.log(\"Setting mock_uid: \" + pm.response.json().mock.uid);",
-                  "    console.log(\"Setting url: \" + pm.response.json().mock.mockUrl);",
-                  "});"
-                ]
+        "response": [
+          {
+            "name": "example1",
+            "originalRequest": {
+              "method": "GET",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": ""
               }
-            }
-          ],
-          "_postman_id": "4518432-02f7b300-7ce6-49b5-b76d-6a1c60c724e6",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"mock\": {\n    \"collection\": \"{{collection_uid}}\"\n  }\n}"
             },
-            "url": "https://api.getpostman.com/mocks",
-            "description": "This endpoint allows you to create a mock on a collection. You can also provide an environment UID to resolve any environment variables in the collection.\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter."
-          },
-          "response": [
-            {
-              "id": "4518432-f68c8bf8-7f4e-4ca5-bd92-36eed3b1c9d3",
-              "name": "Successful Response",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": "The mime type of this content"
-                  },
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n\t\"mock\": {\n\t\t\"collection\": \"1679925-39fee52f-b806-3ffa-1173-00a6f5b183dc\",\n\t\t\"environment\": \"1679925-0b9e9f15-3208-a2b1-22e0-d58392f01524\"\n\t}\n}"
-                },
-                "url": "https://api.getpostman.com/mocks"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "name": "Access-Control-Allow-Credentials",
-                  "description": "Indicates whether or not the response to the request can be exposed when the credentials flag is true. When used as part of a response to a preflight request, this indicates whether or not the actual request can be made using credentials."
-                },
-                {
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "name": "Access-Control-Allow-Headers",
-                  "description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
-                },
-                {
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "name": "Access-Control-Allow-Methods",
-                  "description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "name": "Access-Control-Allow-Origin",
-                  "description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
-                },
-                {
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "name": "Access-Control-Expose-Headers",
-                  "description": "Lets a server whitelist headers that browsers are allowed to access."
-                },
-                {
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "name": "Connection",
-                  "description": "Options that are desired for the connection"
-                },
-                {
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "name": "Content-Encoding",
-                  "description": "The type of encoding used on the data."
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "197",
-                  "name": "Content-Length",
-                  "description": "The length of the response body in octets (8-bit bytes)"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "name": "Content-Type",
-                  "description": "The mime type of this content"
-                },
-                {
-                  "key": "Date",
-                  "value": "Mon, 06 Mar 2017 15:36:31 GMT",
-                  "name": "Date",
-                  "description": "The date and time that the message was sent"
-                },
-                {
-                  "key": "ETag",
-                  "value": "W/\"13d-ZYjjs3SUBAYM3G91RE5yBw\"",
-                  "name": "ETag",
-                  "description": "An identifier for a specific version of a resource, often a message digest"
-                },
-                {
-                  "key": "Server",
-                  "value": "nginx/1.10.1",
-                  "name": "Server",
-                  "description": "A name for the server"
-                },
-                {
-                  "key": "Vary",
-                  "value": "Accept-Encoding",
-                  "name": "Vary",
-                  "description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
-                }
+            "url": {
+              "raw": "{{url}}/example1",
+              "host": [
+                "{{url}}"
               ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"mock\":{\"id\":\"0fca2246-c108-41f5-8454-cc032def329f\",\"owner\":\"1679925\",\"uid\":\"1679925-0fca2246-c108-41f5-8454-cc032def329f\",\"collection\":\"1679925-39fee52f-b806-3ffa-1173-00a6f5b183dc\",\"environment\":\"1679925-0b9e9f15-3208-a2b1-22e0-d58392f01524\",\"mockUrl\":\"https://0fca2246-c108-41f5-8454-cc032def329f.mock.pstmn.io\"}}"
-            }
-          ]
-        }
-      ],
-      "_postman_id": "4518432-678ad2dd-cb7d-4824-a96a-ac8d9bf013a7",
-      "description": "Create a new collection and mock endpoint.\n\nIn Postman, a mock is essentially a paired request and response saved to a collection. So it makes sense that we would first need to create a collection if we dont have one already. Lets use the [Postman API](https://docs.api.getpostman.com/) to create a new collection, and then create a new mock associated with that collection.\n\n**Requirements**\n* Postman API Key\n\n**Workflow** \n1. Use the Postman API to [`POST` a new collection](https://docs.api.getpostman.com/#99810ef3-3cc0-a6cc-06f5-d8e2ae9d84e4)\n1. Use the Postman API to [`POST` a mock](https://docs.api.getpostman.com/#a54b358e-2686-bb4e-15c6-125b23776593)\n\n![[POST body](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-body2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-body2.png) "
-    },
-    {
-      "name": "Add a mock to an existing collection",
-      "item": [
-        {
-          "name": "Get collection",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response json data should not have errors\", function () {",
-                  "    pm.response.to.have.jsonBody();",
-                  "    pm.response.to.not.have.jsonBody('error');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should contain one collection\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection').and.be.an('object');",
-                  "});",
-                  "",
-                  "// additional tests to ensure that the relevant environment variables are present",
-                  "pm.test('\"postman_api_key\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('postman_api_key')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// you can unskip this test in case you want to have a stricter check on the selected",
-                  "// environment.",
-                  "pm.test.skip('\"collection_uid\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('collection_uid')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// store the collection as a json object in an environment variable",
-                  "pm.environment.set(\"current_collection\", JSON.stringify(pm.response.json()));",
-                  "",
-                  "// open the Postman console to view log statements",
-                  "console.log(\"Setting current_collection: \" + pm.response.json().collection.info._postman_id);",
-                  ""
-                ]
-              }
-            }
-          ],
-          "_postman_id": "4518432-5afd9734-a309-4940-93fb-aa963eb1c2cf",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": "https://api.getpostman.com/collections/{{collection_uid}}",
-            "description": "Access the contents of a collection that is accessible to you using its unique id (`uid`).\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter."
-          },
-          "response": [
-            {
-              "id": "4518432-57ed9ce3-ecec-48cf-b4af-3a276dce3fd4",
-              "name": "Valid Response",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": ""
-                },
-                "url": "https://api.getpostman.com/collections/{{collection_uid}}"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "javascript",
-              "header": [
-                {
-                  "name": "Access-Control-Allow-Credentials",
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Headers",
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Methods",
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Origin",
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Expose-Headers",
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Connection",
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "description": ""
-                },
-                {
-                  "name": "Content-Encoding",
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "description": ""
-                },
-                {
-                  "name": "Content-Type",
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "description": ""
-                },
-                {
-                  "name": "Date",
-                  "key": "Date",
-                  "value": "Fri, 27 May 2016 21:37:31 GMT",
-                  "description": ""
-                },
-                {
-                  "name": "ETag",
-                  "key": "ETag",
-                  "value": "W/\"453-t7Du3QMg1i7hkk6S4e3NvA\"",
-                  "description": ""
-                },
-                {
-                  "name": "Server",
-                  "key": "Server",
-                  "value": "nginx/1.8.1",
-                  "description": ""
-                },
-                {
-                  "name": "Vary",
-                  "key": "Vary",
-                  "value": "Accept-Encoding",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Limit",
-                  "key": "X-RateLimit-Limit",
-                  "value": "60",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Remaining",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "57",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Reset",
-                  "key": "X-RateLimit-Reset",
-                  "value": "1464385067",
-                  "description": ""
-                },
-                {
-                  "name": "transfer-encoding",
-                  "key": "transfer-encoding",
-                  "value": "chunked",
-                  "description": ""
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"collection\":{\"variables\":[],\"info\":{\"name\":\"Sample Collection\",\"_postman_id\":\"f2e66c2e-5297-e4a5-739e-20cbb90900e3\",\"description\":\"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.0.0/collection.json\"},\"item\":[{\"id\":\"82ee981b-e19f-962a-401e-ea34ebfb4848\",\"name\":\"Request Headers\",\"event\":[{\"listen\":\"test\",\"script\":{\"type\":\"text/javascript\",\"exec\":\"var responseJSON;\\ntry {\\n    tests[\\\"Body contains headers\\\"] = responseBody.has(\\\"headers\\\");\\n    responseJSON = JSON.parse(responseBody);\\n    tests[\\\"Header contains host\\\"] = \\\"host\\\" in responseJSON.headers;\\n    tests[\\\"Header contains test parameter sent as part of request header\\\"] = \\\"my-sample-header\\\" in responseJSON.headers;\\n}\\ncatch (e) { }\\n\\n\\n\\n\"}}],\"request\":{\"url\":\"https://echo.getpostman.com/headers\",\"method\":\"GET\",\"header\":[{\"key\":\"my-sample-header\",\"value\":\"Lorem ipsum dolor sit amet\",\"description\":\"\"}],\"body\":{\"mode\":\"formdata\",\"formdata\":[]},\"description\":\"\"},\"response\":[]}]}}"
-            }
-          ]
-        },
-        {
-          "name": "Update collection with new mock",
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "id": "45fe59ea-7ae4-4200-89c3-17e62f561e6c",
-                "type": "text/javascript",
-                "exec": [
-                  "// retrieve the collection",
-                  "let currentCollection = JSON.parse(pm.environment.get(\"current_collection\"));",
-                  "",
-                  "// update the mockToAdd environment variable as an object containing request and response properties",
-                  "// there is a sample included in the description of this request",
-                  "let mockExample = pm.environment.get(\"mockToAdd\"); ",
-                  "",
-                  "// add a mock example to the collection's array as a paired request and response",
-                  "currentCollection.collection.item.push(JSON.parse(mockExample));",
-                  "",
-                  "// store the updated collection as an environment variable to use in the request body",
-                  "pm.environment.set(\"updated_collection\", JSON.stringify(currentCollection));",
-                  "",
-                  "// open the Postman console to view log statements",
-                  "console.log(\"Setting updated_collection: \" + currentCollection.collection.info._postman_id);"
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "id": "d97c11e2-59c1-4138-80e0-ee1553251e00",
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response json data should not have errors\", function () {",
-                  "    pm.response.to.have.jsonBody();",
-                  "    pm.response.to.not.have.jsonBody('error');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should contain one collection\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection').and.be.an('object');",
-                  "});",
-                  "",
-                  "// additional tests to ensure that the relevant environment variables are present",
-                  "pm.test('\"postman_api_key\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('postman_api_key')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// we double check the request to ensure that relevant parameters are present",
-                  "pm.test(\"request body must have valid json\", function () {",
-                  "    var _ = require('lodash'),",
-                  "        requestJSON = JSON.parse(_.get(pm.request, 'body.raw', '{}')),",
-                  "        collectionIdInRequestUrl = _.get(pm.request, 'url.path[1]', '').replace(/^.*?-/, '');",
-                  "",
-                  "    // the request body collection should have the same collection Id as sent in URL",
-                  "    pm.expect(requestJSON).to.have.nested.property('collection.info._postman_id', ",
-                  "        collectionIdInRequestUrl);",
-                  "});",
-                  "",
-                  "// you can unskip this test in case you want to have a stricter check on the selected",
-                  "// environment.",
-                  "pm.test.skip('\"collection_uid\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('collection_uid')).to.be.a('string');",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "_postman_id": "4518432-fd93d51d-518c-47f4-88dd-80d109a3f197",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{{updated_collection}}"
-            },
-            "url": "https://api.getpostman.com/collections/{{collection_uid}}",
-            "description": "**Sample mock to update `mockToAdd` environment variable:**\n\n```     \n{\n        \"name\": \"Sample GET Request\",\n        \"request\": {\n          \"url\": \"https://27d0d329-7f20-4019-9931-8ba52dd44698.mock.pstmn.io/example1\",\n          \"method\": \"GET\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"raw\",\n            \"raw\": \"{\\\"data\\\": \\\"123\\\"}\"\n          },\n          \"description\": \"This is a sample GET Request\"\n        },\n        \"response\": [\n          {\n            \"name\": \"example1\",\n            \"originalRequest\": {\n              \"method\": \"GET\",\n              \"header\": [],\n              \"body\": {\n                \"mode\": \"raw\",\n                \"raw\": \"\"\n              }\n            },\n            \"url\": {\n              \"raw\": \"{{url}}/example1\",\n              \"host\": [\n                \"{{url}}\"\n              ],\n              \"path\": [\n                \"example1\"\n              ]\n            },\n            \"code\": 200,\n            \"_postman_previewlanguage\": null,\n            \"headers\": [],\n            \"cookies\": [],\n            \"body\": \"first example response\"\n          }\n        ]\n      }\n```\n\nThis endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).\n\nOn successful updation of the collection, the response returns the collection `name`, `id` and `uid`.\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.\n\nNote: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body."
-          },
-          "response": [
-            {
-              "id": "4518432-bfe58735-89e1-4b3a-8c53-20181915972b",
-              "name": "Collection Updated",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"collection\": {\n    \"variables\": [],\n    \"info\": {\n      \"name\": \"Sample Collection\",\n      \"_postman_id\": \"1d3daef4-2037-4584-ab86-bafd8c8f8a55\",\n      \"description\": \"This is just a sample collection.\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.0.0/collection.json\"\n    },\n    \"item\": [\n      {\n        \"name\": \"This is a folder\",\n        \"description\": \"\",\n        \"item\": [\n          {\n            \"_postman_id\": \"b5e8d7dd-909c-4ba7-aef4-8609bc50b586\",\n            \"name\": \"Sample POST Request\",\n            \"request\": {\n              \"url\": \"echo.getpostman.com/post\",\n              \"method\": \"POST\",\n              \"header\": [\n                {\n                  \"key\": \"Content-Type\",\n                  \"value\": \"application/json\",\n                  \"description\": \"\"\n                }\n              ],\n              \"body\": {\n                \"mode\": \"raw\",\n                \"raw\": \"{\\n\\t\\\"data\\\": \\\"123\\\"\\n}\"\n              },\n              \"description\": \"This is a sample POST Request\"\n            },\n            \"response\": []\n          }\n        ]\n      },\n      {\n        \"name\": \"This is a second folder\",\n        \"description\": \"This is the second folder\",\n        \"item\": []\n      },\n      {\n        \"name\": \"Sample GET Request\",\n        \"request\": {\n          \"url\": \"echo.getpostman.com/get\",\n          \"method\": \"GET\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"formdata\": []\n          },\n          \"description\": \"This is a sample GET Request\"\n        },\n        \"response\": []\n      },\n      {\n        \"name\": \"This is the second request\",\n        \"request\": {\n          \"url\": \"echo.getpostman.com/post\",\n          \"method\": \"POST\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"formdata\": []\n          },\n          \"description\": \"This is the second request\"\n        },\n        \"response\": []\n      }\n    ]\n  }\n}"
-                },
-                "url": "https://api.getpostman.com/collections/{{collection_uid}}"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "name": "Access-Control-Allow-Credentials",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "name": "Access-Control-Allow-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "name": "Access-Control-Allow-Methods",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "name": "Access-Control-Allow-Origin",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "name": "Access-Control-Expose-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "name": "Connection",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "name": "Content-Encoding",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "110",
-                  "name": "Content-Length",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "name": "Content-Type",
-                  "description": ""
-                },
-                {
-                  "key": "Date",
-                  "value": "Wed, 23 Nov 2016 12:03:23 GMT",
-                  "name": "Date",
-                  "description": ""
-                },
-                {
-                  "key": "ETag",
-                  "value": "W/\"89-Tuf/A5YFyf5ewpKKrb1Zww\"",
-                  "name": "ETag",
-                  "description": ""
-                },
-                {
-                  "key": "Server",
-                  "value": "nginx/1.8.0",
-                  "name": "Server",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Limit",
-                  "value": "60",
-                  "name": "X-RateLimit-Limit",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Remaining",
-                  "value": "56",
-                  "name": "X-RateLimit-Remaining",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Reset",
-                  "value": "1479902614",
-                  "name": "X-RateLimit-Reset",
-                  "description": ""
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"collection\":{\"id\":\"1d3daef4-2037-4584-ab86-bafd8c8f8a55\",\"name\":\"Sample Collection\",\"uid\":\"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55\"}}"
-            }
-          ]
-        }
-      ],
-      "_postman_id": "4518432-d21b2279-7f28-4e05-925f-c577de8f519a",
-      "description": "Add a mock response to an existing collection.\n\nNow say we already have a collection, and we want to add a mock to our collection. Same as the previous scenario, well just need our `collection_uid` first. \n\n**Requirements**\n* Postman API Key\n* `collection_uid`\n\n**Workflow** \n1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)\n1. Add a mock example to the collection (via Postman script)\n1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)\n  \n  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).\n\n  ![[add pre request](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-add-pre-request2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-add-pre-request2.png)"
-    },
-    {
-      "name": "Generate new mock for existing collection",
-      "item": [
-        {
-          "name": "Get collection",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response json data should not have errors\", function () {",
-                  "    pm.response.to.have.jsonBody();",
-                  "    pm.response.to.not.have.jsonBody('error');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should contain one collection\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection').and.be.an('object');",
-                  "});",
-                  "",
-                  "// additional tests to ensure that the relevant environment variables are present",
-                  "pm.test('\"postman_api_key\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('postman_api_key')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// you can unskip this test in case you want to have a stricter check on the selected",
-                  "// environment.",
-                  "pm.test.skip('\"collection_uid\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('collection_uid')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// store the collection as a json object in an environment variable",
-                  "pm.environment.set(\"current_collection\", JSON.stringify(pm.response.json()));",
-                  "",
-                  "// open the Postman console to view log statements",
-                  "console.log(\"Setting current_collection: \" + pm.response.json().collection.info._postman_id);",
-                  ""
-                ]
-              }
-            }
-          ],
-          "_postman_id": "4518432-47761c49-f45a-43ed-9c94-b68661d60f20",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": "https://api.getpostman.com/collections/{{collection_uid}}",
-            "description": "Access the contents of a collection that is accessible to you using its unique id (`uid`).\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter."
-          },
-          "response": [
-            {
-              "id": "4518432-61ca09a6-a4d7-4d1c-aee7-e8b0576eced7",
-              "name": "Valid Response",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": ""
-                },
-                "url": "https://api.getpostman.com/collections/{{collection_uid}}"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "javascript",
-              "header": [
-                {
-                  "name": "Access-Control-Allow-Credentials",
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Headers",
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Methods",
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Origin",
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Expose-Headers",
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Connection",
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "description": ""
-                },
-                {
-                  "name": "Content-Encoding",
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "description": ""
-                },
-                {
-                  "name": "Content-Type",
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "description": ""
-                },
-                {
-                  "name": "Date",
-                  "key": "Date",
-                  "value": "Fri, 27 May 2016 21:37:31 GMT",
-                  "description": ""
-                },
-                {
-                  "name": "ETag",
-                  "key": "ETag",
-                  "value": "W/\"453-t7Du3QMg1i7hkk6S4e3NvA\"",
-                  "description": ""
-                },
-                {
-                  "name": "Server",
-                  "key": "Server",
-                  "value": "nginx/1.8.1",
-                  "description": ""
-                },
-                {
-                  "name": "Vary",
-                  "key": "Vary",
-                  "value": "Accept-Encoding",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Limit",
-                  "key": "X-RateLimit-Limit",
-                  "value": "60",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Remaining",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "57",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Reset",
-                  "key": "X-RateLimit-Reset",
-                  "value": "1464385067",
-                  "description": ""
-                },
-                {
-                  "name": "transfer-encoding",
-                  "key": "transfer-encoding",
-                  "value": "chunked",
-                  "description": ""
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"collection\":{\"variables\":[],\"info\":{\"name\":\"Sample Collection\",\"_postman_id\":\"f2e66c2e-5297-e4a5-739e-20cbb90900e3\",\"description\":\"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.0.0/collection.json\"},\"item\":[{\"id\":\"82ee981b-e19f-962a-401e-ea34ebfb4848\",\"name\":\"Request Headers\",\"event\":[{\"listen\":\"test\",\"script\":{\"type\":\"text/javascript\",\"exec\":\"var responseJSON;\\ntry {\\n    tests[\\\"Body contains headers\\\"] = responseBody.has(\\\"headers\\\");\\n    responseJSON = JSON.parse(responseBody);\\n    tests[\\\"Header contains host\\\"] = \\\"host\\\" in responseJSON.headers;\\n    tests[\\\"Header contains test parameter sent as part of request header\\\"] = \\\"my-sample-header\\\" in responseJSON.headers;\\n}\\ncatch (e) { }\\n\\n\\n\\n\"}}],\"request\":{\"url\":\"https://echo.getpostman.com/headers\",\"method\":\"GET\",\"header\":[{\"key\":\"my-sample-header\",\"value\":\"Lorem ipsum dolor sit amet\",\"description\":\"\"}],\"body\":{\"mode\":\"formdata\",\"formdata\":[]},\"description\":\"\"},\"response\":[]}]}}"
-            }
-          ]
-        },
-        {
-          "name": "Update collection with generated mock",
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// retrieve the collection",
-                  "let currentCollection = JSON.parse(pm.environment.get(\"current_collection\"));",
-                  "",
-                  "// an example mock object that can be updated before updating the underlying collection",
-                  "let mockExample = {",
-                  "    \"name\": \"Sample GET Request\",",
-                  "    \"request\": {",
-                  "      \"url\": \"https://27d0d329-7f20-4019-9931-8ba52dd44698.mock.pstmn.io/example1\",",
-                  "      \"method\": \"GET\",",
-                  "      \"header\": [],",
-                  "      \"body\": {",
-                  "        \"mode\": \"raw\",",
-                  "        \"raw\": \"{\\\"data\\\": \\\"123\\\"}\"",
-                  "      },",
-                  "      \"description\": \"This is a sample GET Request\"",
-                  "    },",
-                  "    \"response\": [",
-                  "      {",
-                  "        \"name\": \"example1\",",
-                  "        \"originalRequest\": {",
-                  "          \"method\": \"GET\",",
-                  "          \"header\": [],",
-                  "          \"body\": {",
-                  "            \"mode\": \"raw\",",
-                  "            \"raw\": \"\"",
-                  "          }",
-                  "        },",
-                  "        \"url\": {",
-                  "          \"raw\": \"{{url}}/example1\",",
-                  "          \"host\": [",
-                  "            \"{{url}}\"",
-                  "          ],",
-                  "          \"path\": [",
-                  "            \"example1\"",
-                  "          ]",
-                  "        },",
-                  "        \"code\": 200,",
-                  "        \"_postman_previewlanguage\": null,",
-                  "        \"headers\": [],",
-                  "        \"cookies\": [],",
-                  "        \"body\": \"first example response\"",
-                  "      }",
-                  "    ]",
-                  "}",
-                  "",
-                  "// in this case, we will update the response body with something like a new date",
-                  "// but you could also update the request method, response code, response body, etc. with other dynamically generated or retrieved information",
-                  "let newBody = new Date();",
-                  "mockExample.response[0].body = newBody;",
-                  "",
-                  "// open the Postman console to view log statements",
-                  "console.log(\"New mock example: \", mockExample);",
-                  "",
-                  "// add the updated mock example to the collection's array",
-                  "currentCollection.collection.item.push(mockExample);",
-                  "",
-                  "// store the updated collection as an environment variable to use in the request body",
-                  "pm.environment.set(\"updated_collection\", JSON.stringify(currentCollection));",
-                  "console.log(\"Setting updated_collection: \" + currentCollection.collection.info._postman_id);",
-                  ""
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response json data should not have errors\", function () {",
-                  "    pm.response.to.have.jsonBody();",
-                  "    pm.response.to.not.have.jsonBody('error');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should contain one collection\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection').and.be.an('object');",
-                  "});",
-                  "",
-                  "// additional tests to ensure that the relevant environment variables are present",
-                  "pm.test('\"postman_api_key\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('postman_api_key')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// we double check the request to ensure that relevant parameters are present",
-                  "pm.test(\"request body must have valid json\", function () {",
-                  "    var _ = require('lodash'),",
-                  "        requestJSON = JSON.parse(_.get(pm.request, 'body.raw', '{}')),",
-                  "        collectionIdInRequestUrl = _.get(pm.request, 'url.path[1]', '').replace(/^.*?-/, '');",
-                  "",
-                  "    // the request body collection should have the same collection Id as sent in URL",
-                  "    pm.expect(requestJSON).to.have.nested.property('collection.info._postman_id', ",
-                  "        collectionIdInRequestUrl);",
-                  "});",
-                  "",
-                  "// you can unskip this test in case you want to have a stricter check on the selected",
-                  "// environment.",
-                  "pm.test.skip('\"collection_uid\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('collection_uid')).to.be.a('string');",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "_postman_id": "4518432-757a9628-92b9-41e0-8247-3f1ca9de2a77",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{{updated_collection}}"
-            },
-            "url": "https://api.getpostman.com/collections/{{collection_uid}}",
-            "description": "This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).\n\nOn successful updation of the collection, the response returns the collection `name`, `id` and `uid`.\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.\n\nNote: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body."
-          },
-          "response": [
-            {
-              "id": "4518432-577b00c6-fa0b-4eaf-8432-cb91fd8da087",
-              "name": "Collection Updated",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"collection\": {\n    \"variables\": [],\n    \"info\": {\n      \"name\": \"Sample Collection\",\n      \"_postman_id\": \"1d3daef4-2037-4584-ab86-bafd8c8f8a55\",\n      \"description\": \"This is just a sample collection.\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.0.0/collection.json\"\n    },\n    \"item\": [\n      {\n        \"name\": \"This is a folder\",\n        \"description\": \"\",\n        \"item\": [\n          {\n            \"_postman_id\": \"b5e8d7dd-909c-4ba7-aef4-8609bc50b586\",\n            \"name\": \"Sample POST Request\",\n            \"request\": {\n              \"url\": \"echo.getpostman.com/post\",\n              \"method\": \"POST\",\n              \"header\": [\n                {\n                  \"key\": \"Content-Type\",\n                  \"value\": \"application/json\",\n                  \"description\": \"\"\n                }\n              ],\n              \"body\": {\n                \"mode\": \"raw\",\n                \"raw\": \"{\\n\\t\\\"data\\\": \\\"123\\\"\\n}\"\n              },\n              \"description\": \"This is a sample POST Request\"\n            },\n            \"response\": []\n          }\n        ]\n      },\n      {\n        \"name\": \"This is a second folder\",\n        \"description\": \"This is the second folder\",\n        \"item\": []\n      },\n      {\n        \"name\": \"Sample GET Request\",\n        \"request\": {\n          \"url\": \"echo.getpostman.com/get\",\n          \"method\": \"GET\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"formdata\": []\n          },\n          \"description\": \"This is a sample GET Request\"\n        },\n        \"response\": []\n      },\n      {\n        \"name\": \"This is the second request\",\n        \"request\": {\n          \"url\": \"echo.getpostman.com/post\",\n          \"method\": \"POST\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"formdata\": []\n          },\n          \"description\": \"This is the second request\"\n        },\n        \"response\": []\n      }\n    ]\n  }\n}"
-                },
-                "url": "https://api.getpostman.com/collections/{{collection_uid}}"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "name": "Access-Control-Allow-Credentials",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "name": "Access-Control-Allow-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "name": "Access-Control-Allow-Methods",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "name": "Access-Control-Allow-Origin",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "name": "Access-Control-Expose-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "name": "Connection",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "name": "Content-Encoding",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "110",
-                  "name": "Content-Length",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "name": "Content-Type",
-                  "description": ""
-                },
-                {
-                  "key": "Date",
-                  "value": "Wed, 23 Nov 2016 12:03:23 GMT",
-                  "name": "Date",
-                  "description": ""
-                },
-                {
-                  "key": "ETag",
-                  "value": "W/\"89-Tuf/A5YFyf5ewpKKrb1Zww\"",
-                  "name": "ETag",
-                  "description": ""
-                },
-                {
-                  "key": "Server",
-                  "value": "nginx/1.8.0",
-                  "name": "Server",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Limit",
-                  "value": "60",
-                  "name": "X-RateLimit-Limit",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Remaining",
-                  "value": "56",
-                  "name": "X-RateLimit-Remaining",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Reset",
-                  "value": "1479902614",
-                  "name": "X-RateLimit-Reset",
-                  "description": ""
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"collection\":{\"id\":\"1d3daef4-2037-4584-ab86-bafd8c8f8a55\",\"name\":\"Sample Collection\",\"uid\":\"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55\"}}"
-            }
-          ]
-        }
-      ],
-      "_postman_id": "4518432-e50df9af-62be-4488-8782-acf069f5a1da",
-      "description": "Generate a new mock for an existing collection.\n\nThis is the same as the previous Add a mock to an existing collection scenario, except you can generate or retrieve information to update the mock example.\n\n**Requirements**\n* Postman API Key\n* `collection_uid`\n\n**Workflow** \n1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)\n1. Perform calculations or generate data (via Postman script)\n1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)\n  \n  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).\n\n  ![[update pre request script](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-pre-request2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-pre-request2.png)"
-    },
-    {
-      "name": "Update a mock response for an existing collection",
-      "item": [
-        {
-          "name": "Get collection",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response json data should not have errors\", function () {",
-                  "    pm.response.to.have.jsonBody();",
-                  "    pm.response.to.not.have.jsonBody('error');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should contain one collection\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection').and.be.an('object');",
-                  "});",
-                  "",
-                  "// additional tests to ensure that the relevant environment variables are present",
-                  "pm.test('\"postman_api_key\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('postman_api_key')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// you can unskip this test in case you want to have a stricter check on the selected",
-                  "// environment.",
-                  "pm.test.skip('\"collection_uid\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('collection_uid')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// store the collection as a json object in an environment variable",
-                  "pm.environment.set(\"current_collection\", JSON.stringify(pm.response.json()));",
-                  "",
-                  "// open the Postman console to view log statements",
-                  "console.log(\"Setting current_collection: \" + pm.response.json().collection.info._postman_id);",
-                  ""
-                ]
-              }
-            }
-          ],
-          "_postman_id": "4518432-6565b1c7-703e-4e0f-a77b-f30152404e5e",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": "https://api.getpostman.com/collections/{{collection_uid}}",
-            "description": "Access the contents of a collection that is accessible to you using its unique id (`uid`).\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter."
-          },
-          "response": [
-            {
-              "id": "4518432-f12416da-0281-4c29-95cb-e63f3e570ef3",
-              "name": "Valid Response",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": ""
-                },
-                "url": "https://api.getpostman.com/collections/{{collection_uid}}"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "javascript",
-              "header": [
-                {
-                  "name": "Access-Control-Allow-Credentials",
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Headers",
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Methods",
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Origin",
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Expose-Headers",
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Connection",
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "description": ""
-                },
-                {
-                  "name": "Content-Encoding",
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "description": ""
-                },
-                {
-                  "name": "Content-Type",
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "description": ""
-                },
-                {
-                  "name": "Date",
-                  "key": "Date",
-                  "value": "Fri, 27 May 2016 21:37:31 GMT",
-                  "description": ""
-                },
-                {
-                  "name": "ETag",
-                  "key": "ETag",
-                  "value": "W/\"453-t7Du3QMg1i7hkk6S4e3NvA\"",
-                  "description": ""
-                },
-                {
-                  "name": "Server",
-                  "key": "Server",
-                  "value": "nginx/1.8.1",
-                  "description": ""
-                },
-                {
-                  "name": "Vary",
-                  "key": "Vary",
-                  "value": "Accept-Encoding",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Limit",
-                  "key": "X-RateLimit-Limit",
-                  "value": "60",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Remaining",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "57",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Reset",
-                  "key": "X-RateLimit-Reset",
-                  "value": "1464385067",
-                  "description": ""
-                },
-                {
-                  "name": "transfer-encoding",
-                  "key": "transfer-encoding",
-                  "value": "chunked",
-                  "description": ""
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"collection\":{\"variables\":[],\"info\":{\"name\":\"Sample Collection\",\"_postman_id\":\"f2e66c2e-5297-e4a5-739e-20cbb90900e3\",\"description\":\"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.0.0/collection.json\"},\"item\":[{\"id\":\"82ee981b-e19f-962a-401e-ea34ebfb4848\",\"name\":\"Request Headers\",\"event\":[{\"listen\":\"test\",\"script\":{\"type\":\"text/javascript\",\"exec\":\"var responseJSON;\\ntry {\\n    tests[\\\"Body contains headers\\\"] = responseBody.has(\\\"headers\\\");\\n    responseJSON = JSON.parse(responseBody);\\n    tests[\\\"Header contains host\\\"] = \\\"host\\\" in responseJSON.headers;\\n    tests[\\\"Header contains test parameter sent as part of request header\\\"] = \\\"my-sample-header\\\" in responseJSON.headers;\\n}\\ncatch (e) { }\\n\\n\\n\\n\"}}],\"request\":{\"url\":\"https://echo.getpostman.com/headers\",\"method\":\"GET\",\"header\":[{\"key\":\"my-sample-header\",\"value\":\"Lorem ipsum dolor sit amet\",\"description\":\"\"}],\"body\":{\"mode\":\"formdata\",\"formdata\":[]},\"description\":\"\"},\"response\":[]}]}}"
-            }
-          ]
-        },
-        {
-          "name": "Update collection by updating mock",
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "id": "5fbc8e32-76f5-4e01-8cce-7ace4e6e73ef",
-                "type": "text/javascript",
-                "exec": [
-                  "// retrieve the collection",
-                  "let currentCollection = JSON.parse(pm.environment.get(\"current_collection\"));",
-                  "",
-                  "// update mockToUpdate environment variable as a string containing the mock ID",
-                  "let mockID = pm.environment.get(\"mockToUpdate\"); ",
-                  "// update mockToAdd environment variable as an object containing request and response properties",
-                  "// there is a sample included in the description of this request",
-                  "let mockExample = pm.environment.get(\"mockToAdd\");",
-                  "",
-                  "// loop through the items to identify the mock to be updated",
-                  "for (i = 0; i < currentCollection.collection.item.length; i++) {",
-                  "    if (currentCollection.collection.item[i]._postman_id == mockID) {",
-                  "        currentCollection.collection.item[i] = JSON.parse(mockExample);",
-                  "    ",
-                  "    // open the Postman console to view log statements",
-                  "    console.log(\"New mock example: \", mockExample);",
-                  "    }",
-                  "}",
-                  "",
-                  "// store the updated collection as an environment variable to use in the request body",
-                  "pm.environment.set(\"updated_collection\", JSON.stringify(currentCollection));",
-                  "console.log(\"Setting updated_collection: \" + currentCollection.collection.info._postman_id);",
-                  ""
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "id": "c723bd0d-66ed-4fa1-9b24-b150ebf4e812",
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response json data should not have errors\", function () {",
-                  "    pm.response.to.have.jsonBody();",
-                  "    pm.response.to.not.have.jsonBody('error');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should contain one collection\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection').and.be.an('object');",
-                  "});",
-                  "",
-                  "// additional tests to ensure that the relevant environment variables are present",
-                  "pm.test('\"postman_api_key\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('postman_api_key')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// we double check the request to ensure that relevant parameters are present",
-                  "pm.test(\"request body must have valid json\", function () {",
-                  "    var _ = require('lodash'),",
-                  "        requestJSON = JSON.parse(_.get(pm.request, 'body.raw', '{}')),",
-                  "        collectionIdInRequestUrl = _.get(pm.request, 'url.path[1]', '').replace(/^.*?-/, '');",
-                  "",
-                  "    // the request body collection should have the same collection Id as sent in URL",
-                  "    pm.expect(requestJSON).to.have.nested.property('collection.info._postman_id', ",
-                  "        collectionIdInRequestUrl);",
-                  "});",
-                  "",
-                  "// you can unskip this test in case you want to have a stricter check on the selected",
-                  "// environment.",
-                  "pm.test.skip('\"collection_uid\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('collection_uid')).to.be.a('string');",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "_postman_id": "4518432-b1d66a81-fb17-4c1e-9c59-158eaf17010f",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{{updated_collection}}"
-            },
-            "url": "https://api.getpostman.com/collections/{{collection_uid}}",
-            "description": "**Sample mock to update `mockToAdd` environment variable:**\n```\n     {\n        \"name\": \"Sample GET Request\",\n        \"request\": {\n          \"url\": \"https://27d0d329-7f20-4019-9931-8ba52dd44698.mock.pstmn.io/example1\",\n          \"method\": \"GET\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"raw\",\n            \"raw\": \"{\\\"data\\\": \\\"123\\\"}\"\n          },\n          \"description\": \"This is a sample GET Request\"\n        },\n        \"response\": [\n          {\n            \"name\": \"example1\",\n            \"originalRequest\": {\n              \"method\": \"GET\",\n              \"header\": [],\n              \"body\": {\n                \"mode\": \"raw\",\n                \"raw\": \"\"\n              }\n            },\n            \"url\": {\n              \"raw\": \"{{url}}/example1\",\n              \"host\": [\n                \"{{url}}\"\n              ],\n              \"path\": [\n                \"example1\"\n              ]\n            },\n            \"code\": 200,\n            \"_postman_previewlanguage\": null,\n            \"headers\": [],\n            \"cookies\": [],\n            \"body\": \"first example response\"\n          }\n        ]\n      }\n```\n\nThis endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).\n\nOn successful updation of the collection, the response returns the collection `name`, `id` and `uid`.\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.\n\nNote: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body."
-          },
-          "response": [
-            {
-              "id": "4518432-6b24e580-ced6-42f9-83de-c843c5688f08",
-              "name": "Collection Updated",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"collection\": {\n    \"variables\": [],\n    \"info\": {\n      \"name\": \"Sample Collection\",\n      \"_postman_id\": \"1d3daef4-2037-4584-ab86-bafd8c8f8a55\",\n      \"description\": \"This is just a sample collection.\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.0.0/collection.json\"\n    },\n    \"item\": [\n      {\n        \"name\": \"This is a folder\",\n        \"description\": \"\",\n        \"item\": [\n          {\n            \"_postman_id\": \"b5e8d7dd-909c-4ba7-aef4-8609bc50b586\",\n            \"name\": \"Sample POST Request\",\n            \"request\": {\n              \"url\": \"echo.getpostman.com/post\",\n              \"method\": \"POST\",\n              \"header\": [\n                {\n                  \"key\": \"Content-Type\",\n                  \"value\": \"application/json\",\n                  \"description\": \"\"\n                }\n              ],\n              \"body\": {\n                \"mode\": \"raw\",\n                \"raw\": \"{\\n\\t\\\"data\\\": \\\"123\\\"\\n}\"\n              },\n              \"description\": \"This is a sample POST Request\"\n            },\n            \"response\": []\n          }\n        ]\n      },\n      {\n        \"name\": \"This is a second folder\",\n        \"description\": \"This is the second folder\",\n        \"item\": []\n      },\n      {\n        \"name\": \"Sample GET Request\",\n        \"request\": {\n          \"url\": \"echo.getpostman.com/get\",\n          \"method\": \"GET\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"formdata\": []\n          },\n          \"description\": \"This is a sample GET Request\"\n        },\n        \"response\": []\n      },\n      {\n        \"name\": \"This is the second request\",\n        \"request\": {\n          \"url\": \"echo.getpostman.com/post\",\n          \"method\": \"POST\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"formdata\": []\n          },\n          \"description\": \"This is the second request\"\n        },\n        \"response\": []\n      }\n    ]\n  }\n}"
-                },
-                "url": "https://api.getpostman.com/collections/{{collection_uid}}"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "name": "Access-Control-Allow-Credentials",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "name": "Access-Control-Allow-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "name": "Access-Control-Allow-Methods",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "name": "Access-Control-Allow-Origin",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "name": "Access-Control-Expose-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "name": "Connection",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "name": "Content-Encoding",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "110",
-                  "name": "Content-Length",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "name": "Content-Type",
-                  "description": ""
-                },
-                {
-                  "key": "Date",
-                  "value": "Wed, 23 Nov 2016 12:03:23 GMT",
-                  "name": "Date",
-                  "description": ""
-                },
-                {
-                  "key": "ETag",
-                  "value": "W/\"89-Tuf/A5YFyf5ewpKKrb1Zww\"",
-                  "name": "ETag",
-                  "description": ""
-                },
-                {
-                  "key": "Server",
-                  "value": "nginx/1.8.0",
-                  "name": "Server",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Limit",
-                  "value": "60",
-                  "name": "X-RateLimit-Limit",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Remaining",
-                  "value": "56",
-                  "name": "X-RateLimit-Remaining",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Reset",
-                  "value": "1479902614",
-                  "name": "X-RateLimit-Reset",
-                  "description": ""
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"collection\":{\"id\":\"1d3daef4-2037-4584-ab86-bafd8c8f8a55\",\"name\":\"Sample Collection\",\"uid\":\"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55\"}}"
-            }
-          ]
-        }
-      ],
-      "_postman_id": "4518432-fedd45cf-53ef-4fb2-aa52-011289d415dc",
-      "description": "Update a mock response for an existing collection.\n\nThis is the same as the Add a mock to an existing collection scenario, except you will first search for an existing mock example to replace.\n\n**Requirements**\n* Postman API Key\n* `collection_uid`\n\n**Workflow** \n1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)\n1. Find and update mock example in collection json (via Postman script)\n1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)\n  \n  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).\n\n  ![[update with search](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-search2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-search2.png)"
-    },
-    {
-      "name": "Transfer value from request to response",
-      "item": [
-        {
-          "name": "Echo to POST Form Data",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response body has json with form data\", function () {",
-                  "    pm.response.to.have.jsonBody('form.foo1', 'bar1')",
-                  "        .and.have.jsonBody('form.foo2', 'bar2');",
-                  "});",
-                  "",
-                  "// save the form data that is echoed back by this endpoint as an environment variable",
-                  "pm.environment.set(\"postExample\", JSON.stringify(pm.response.json().form));",
-                  "",
-                  "// open the Postman console to view log statements",
-                  "console.log(\"postExample: \", pm.response.json().form);"
-                ]
-              }
-            }
-          ],
-          "_postman_id": "4518432-edfbf655-6d0a-4a45-897e-73bb42125bd2",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "urlencoded",
-              "urlencoded": [
-                {
-                  "key": "foo1",
-                  "value": "this-new-value",
-                  "type": "text"
-                },
-                {
-                  "key": "foo2",
-                  "value": "how-about-this-now",
-                  "type": "text"
-                }
+              "path": [
+                "example1"
               ]
             },
-            "url": "https://postman-echo.com/post",
-            "description": "The HTTP `POST` request method is meant to transfer data to a server \n(and elicit a response). What data is returned depends on the implementation\nof the server.\n\nA `POST` request can pass parameters to the server using \"Query String \nParameters\", as well as the Request Body. For example, in the following request,\n\n> POST /hi/there?hand=wave\n>\n> <request-body>\n\nThe parameter \"hand\" has the value \"wave\". The request body can be in multiple\nformats. These formats are defined by the MIME type of the request. The MIME \nType can be set using the ``Content-Type`` HTTP header. The most commonly used \nMIME types are:\n\n* `multipart/form-data`\n* `application/x-www-form-urlencoded`\n* `application/json`\n\nThis endpoint echoes the HTTP headers, request parameters, the contents of\nthe request body and the complete URI requested when data is sent as a form parameter."
+            "code": 200,
+            "_postman_previewlanguage": null,
+            "headers": [],
+            "cookies": [],
+            "body": "first example response"
+          }
+        ]
+      }
+```
+
+This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
+
+On successful updation of the collection, the response returns the collection `name`, `id` and `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
+Note: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (string)
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:110
+            Date:Wed, 23 Nov 2016 12:03:23 GMT
+            ETag:W/"89-Tuf/A5YFyf5ewpKKrb1Zww"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:56
+            X-RateLimit-Reset:1479902614
+
+    + Attributes (Collection Updated)
+
+
+    + Body
+
+            {"collection":{"id":"1d3daef4-2037-4584-ab86-bafd8c8f8a55","name":"Sample Collection","uid":"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55"}}
+
+
+
+
+# Group Generate new mock for existing collection
+
+Generate a new mock for an existing collection.
+
+This is the same as the previous Add a mock to an existing collection scenario, except you can generate or retrieve information to update the mock example.
+
+**Requirements**
+* Postman API Key
+* `collection_uid`
+
+**Workflow** 
+1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)
+1. Perform calculations or generate data (via Postman script)
+1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)
+  
+  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).
+
+  ![[update pre request script](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-pre-request2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-pre-request2.png)
+
+## Collections By Collection Uid [/collections/{collection_uid}]
+
++ Parameters
+    + collection_uid (string, required)
+
+
+### Get collection [GET]
+Access the contents of a collection that is accessible to you using its unique id (`uid`).
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request 
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Date:Fri, 27 May 2016 21:37:31 GMT
+            ETag:W/"453-t7Du3QMg1i7hkk6S4e3NvA"
+            Server:nginx/1.8.1
+            Vary:Accept-Encoding
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1464385067
+            transfer-encoding:chunked
+
+    + Attributes (Valid Response)
+
+
+    + Body
+
+            {"collection":{"variables":[],"info":{"name":"Sample Collection","_postman_id":"f2e66c2e-5297-e4a5-739e-20cbb90900e3","description":"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.","schema":"https://schema.getpostman.com/json/collection/v2.0.0/collection.json"},"item":[{"id":"82ee981b-e19f-962a-401e-ea34ebfb4848","name":"Request Headers","event":[{"listen":"test","script":{"type":"text/javascript","exec":"var responseJSON;\ntry {\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    responseJSON = JSON.parse(responseBody);\n    tests[\"Header contains host\"] = \"host\" in responseJSON.headers;\n    tests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in responseJSON.headers;\n}\ncatch (e) { }\n\n\n\n"}}],"request":{"url":"https://echo.getpostman.com/headers","method":"GET","header":[{"key":"my-sample-header","value":"Lorem ipsum dolor sit amet","description":""}],"body":{"mode":"formdata","formdata":[]},"description":""},"response":[]}]}}
+
+
+### Update collection with generated mock [PUT]
+This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
+
+On successful updation of the collection, the response returns the collection `name`, `id` and `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
+Note: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (string)
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:110
+            Date:Wed, 23 Nov 2016 12:03:23 GMT
+            ETag:W/"89-Tuf/A5YFyf5ewpKKrb1Zww"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:56
+            X-RateLimit-Reset:1479902614
+
+    + Attributes (Collection Updated)
+
+
+    + Body
+
+            {"collection":{"id":"1d3daef4-2037-4584-ab86-bafd8c8f8a55","name":"Sample Collection","uid":"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55"}}
+
+
+
+
+# Group Update a mock response for an existing collection
+
+Update a mock response for an existing collection.
+
+This is the same as the Add a mock to an existing collection scenario, except you will first search for an existing mock example to replace.
+
+**Requirements**
+* Postman API Key
+* `collection_uid`
+
+**Workflow** 
+1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)
+1. Find and update mock example in collection json (via Postman script)
+1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)
+  
+  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).
+
+  ![[update with search](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-search2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-update-search2.png)
+
+## Collections By Collection Uid [/collections/{collection_uid}]
+
++ Parameters
+    + collection_uid (string, required)
+
+
+### Get collection [GET]
+Access the contents of a collection that is accessible to you using its unique id (`uid`).
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request 
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Date:Fri, 27 May 2016 21:37:31 GMT
+            ETag:W/"453-t7Du3QMg1i7hkk6S4e3NvA"
+            Server:nginx/1.8.1
+            Vary:Accept-Encoding
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1464385067
+            transfer-encoding:chunked
+
+    + Attributes (Valid Response)
+
+
+    + Body
+
+            {"collection":{"variables":[],"info":{"name":"Sample Collection","_postman_id":"f2e66c2e-5297-e4a5-739e-20cbb90900e3","description":"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.","schema":"https://schema.getpostman.com/json/collection/v2.0.0/collection.json"},"item":[{"id":"82ee981b-e19f-962a-401e-ea34ebfb4848","name":"Request Headers","event":[{"listen":"test","script":{"type":"text/javascript","exec":"var responseJSON;\ntry {\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    responseJSON = JSON.parse(responseBody);\n    tests[\"Header contains host\"] = \"host\" in responseJSON.headers;\n    tests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in responseJSON.headers;\n}\ncatch (e) { }\n\n\n\n"}}],"request":{"url":"https://echo.getpostman.com/headers","method":"GET","header":[{"key":"my-sample-header","value":"Lorem ipsum dolor sit amet","description":""}],"body":{"mode":"formdata","formdata":[]},"description":""},"response":[]}]}}
+
+
+### Update collection by updating mock [PUT]
+**Sample mock to update `mockToAdd` environment variable:**
+```
+     {
+        "name": "Sample GET Request",
+        "request": {
+          "url": "https://27d0d329-7f20-4019-9931-8ba52dd44698.mock.pstmn.io/example1",
+          "method": "GET",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"data\": \"123\"}"
           },
-          "response": []
+          "description": "This is a sample GET Request"
         },
-        {
-          "name": "Get collection",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response json data should not have errors\", function () {",
-                  "    pm.response.to.have.jsonBody();",
-                  "    pm.response.to.not.have.jsonBody('error');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should contain one collection\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection').and.be.an('object');",
-                  "});",
-                  "",
-                  "// additional tests to ensure that the relevant environment variables are present",
-                  "pm.test('\"postman_api_key\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('postman_api_key')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// you can unskip this test in case you want to have a stricter check on the selected",
-                  "// environment.",
-                  "pm.test.skip('\"collection_uid\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('collection_uid')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// store the collection as a json object in an environment variable",
-                  "pm.environment.set(\"current_collection\", JSON.stringify(pm.response.json()));",
-                  "",
-                  "// open the Postman console to view log statements",
-                  "console.log(\"Setting current_collection: \" + pm.response.json().collection.info._postman_id);",
-                  ""
-                ]
+        "response": [
+          {
+            "name": "example1",
+            "originalRequest": {
+              "method": "GET",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": ""
               }
-            }
-          ],
-          "_postman_id": "4518432-77731551-bd22-4426-8a21-b70647fdd575",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
             },
-            "url": "https://api.getpostman.com/collections/{{collection_uid}}",
-            "description": "Access the contents of a collection that is accessible to you using its unique id (`uid`).\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter."
-          },
-          "response": [
-            {
-              "id": "4518432-a9e9409c-c4fb-47bd-9010-f2be5ee5ff97",
-              "name": "Valid Response",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": ""
-                },
-                "url": "https://api.getpostman.com/collections/{{collection_uid}}"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "javascript",
-              "header": [
-                {
-                  "name": "Access-Control-Allow-Credentials",
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Headers",
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Methods",
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Allow-Origin",
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Access-Control-Expose-Headers",
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "name": "Connection",
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "description": ""
-                },
-                {
-                  "name": "Content-Encoding",
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "description": ""
-                },
-                {
-                  "name": "Content-Type",
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "description": ""
-                },
-                {
-                  "name": "Date",
-                  "key": "Date",
-                  "value": "Fri, 27 May 2016 21:37:31 GMT",
-                  "description": ""
-                },
-                {
-                  "name": "ETag",
-                  "key": "ETag",
-                  "value": "W/\"453-t7Du3QMg1i7hkk6S4e3NvA\"",
-                  "description": ""
-                },
-                {
-                  "name": "Server",
-                  "key": "Server",
-                  "value": "nginx/1.8.1",
-                  "description": ""
-                },
-                {
-                  "name": "Vary",
-                  "key": "Vary",
-                  "value": "Accept-Encoding",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Limit",
-                  "key": "X-RateLimit-Limit",
-                  "value": "60",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Remaining",
-                  "key": "X-RateLimit-Remaining",
-                  "value": "57",
-                  "description": ""
-                },
-                {
-                  "name": "X-RateLimit-Reset",
-                  "key": "X-RateLimit-Reset",
-                  "value": "1464385067",
-                  "description": ""
-                },
-                {
-                  "name": "transfer-encoding",
-                  "key": "transfer-encoding",
-                  "value": "chunked",
-                  "description": ""
-                }
+            "url": {
+              "raw": "{{url}}/example1",
+              "host": [
+                "{{url}}"
               ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"collection\":{\"variables\":[],\"info\":{\"name\":\"Sample Collection\",\"_postman_id\":\"f2e66c2e-5297-e4a5-739e-20cbb90900e3\",\"description\":\"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.0.0/collection.json\"},\"item\":[{\"id\":\"82ee981b-e19f-962a-401e-ea34ebfb4848\",\"name\":\"Request Headers\",\"event\":[{\"listen\":\"test\",\"script\":{\"type\":\"text/javascript\",\"exec\":\"var responseJSON;\\ntry {\\n    tests[\\\"Body contains headers\\\"] = responseBody.has(\\\"headers\\\");\\n    responseJSON = JSON.parse(responseBody);\\n    tests[\\\"Header contains host\\\"] = \\\"host\\\" in responseJSON.headers;\\n    tests[\\\"Header contains test parameter sent as part of request header\\\"] = \\\"my-sample-header\\\" in responseJSON.headers;\\n}\\ncatch (e) { }\\n\\n\\n\\n\"}}],\"request\":{\"url\":\"https://echo.getpostman.com/headers\",\"method\":\"GET\",\"header\":[{\"key\":\"my-sample-header\",\"value\":\"Lorem ipsum dolor sit amet\",\"description\":\"\"}],\"body\":{\"mode\":\"formdata\",\"formdata\":[]},\"description\":\"\"},\"response\":[]}]}}"
-            }
-          ]
-        },
-        {
-          "name": "Update collection with request data",
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// retrieve the collection",
-                  "let currentCollection = JSON.parse(pm.environment.get(\"current_collection\"));",
-                  "",
-                  "// an example mock object that can be updated before updating the underlying collection",
-                  "let mockExample = {",
-                  "    \"name\": \"Sample GET Request\",",
-                  "    \"request\": {",
-                  "      \"url\": \"https://27d0d329-7f20-4019-9931-8ba52dd44698.mock.pstmn.io/example1\",",
-                  "      \"method\": \"GET\",",
-                  "      \"header\": [],",
-                  "      \"body\": {",
-                  "        \"mode\": \"raw\",",
-                  "        \"raw\": \"{\\\"data\\\": \\\"123\\\"}\"",
-                  "      },",
-                  "      \"description\": \"This is a sample GET Request\"",
-                  "    },",
-                  "    \"response\": [",
-                  "      {",
-                  "        \"name\": \"example1\",",
-                  "        \"originalRequest\": {",
-                  "          \"method\": \"GET\",",
-                  "          \"header\": [],",
-                  "          \"body\": {",
-                  "            \"mode\": \"raw\",",
-                  "            \"raw\": \"\"",
-                  "          }",
-                  "        },",
-                  "        \"url\": {",
-                  "          \"raw\": \"{{url}}/example1\",",
-                  "          \"host\": [",
-                  "            \"{{url}}\"",
-                  "          ],",
-                  "          \"path\": [",
-                  "            \"example1\"",
-                  "          ]",
-                  "        },",
-                  "        \"code\": 200,",
-                  "        \"_postman_previewlanguage\": null,",
-                  "        \"headers\": [],",
-                  "        \"cookies\": [],",
-                  "        \"body\": \"first example response\"",
-                  "      }",
-                  "    ]",
-                  "}",
-                  "",
-                  "console.log(mockExample);",
-                  "",
-                  "// in this case, we will update the response body with something retrieved from the previous request",
-                  "// but you could also update the request method, response code, response body, etc. with other dynamically generated or retrieved information",
-                  "let newBody = JSON.parse(pm.environment.get(\"postExample\")).foo1;",
-                  "mockExample.response[0].body = newBody;",
-                  "",
-                  "// open the Postman console to view log statements",
-                  "console.log(\"New mock example: \", mockExample);",
-                  "",
-                  "// add the updated mock example to the collection's array",
-                  "currentCollection.collection.item.push(mockExample);",
-                  "",
-                  "// store the updated collection as an environment variable to use in the request body",
-                  "pm.environment.set(\"updated_collection\", JSON.stringify(currentCollection));",
-                  "console.log(\"Setting updated_collection: \" + currentCollection.collection.info._postman_id);",
-                  ""
-                ]
-              }
+              "path": [
+                "example1"
+              ]
             },
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"response is ok\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"response json data should not have errors\", function () {",
-                  "    pm.response.to.have.jsonBody();",
-                  "    pm.response.to.not.have.jsonBody('error');",
-                  "});",
-                  "",
-                  "pm.test(\"response json should contain one collection\", function () {",
-                  "    pm.expect(pm.response.json()).to.have.property('collection').and.be.an('object');",
-                  "});",
-                  "",
-                  "// additional tests to ensure that the relevant environment variables are present",
-                  "pm.test('\"postman_api_key\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('postman_api_key')).to.be.a('string');",
-                  "});",
-                  "",
-                  "// we double check the request to ensure that relevant parameters are present",
-                  "pm.test(\"request body must have valid json\", function () {",
-                  "    var _ = require('lodash'),",
-                  "        requestJSON = JSON.parse(_.get(pm.request, 'body.raw', '{}')),",
-                  "        collectionIdInRequestUrl = _.get(pm.request, 'url.path[1]', '').replace(/^.*?-/, '');",
-                  "",
-                  "    // the request body collection should have the same collection Id as sent in URL",
-                  "    pm.expect(requestJSON).to.have.nested.property('collection.info._postman_id', ",
-                  "        collectionIdInRequestUrl);",
-                  "});",
-                  "",
-                  "// you can unskip this test in case you want to have a stricter check on the selected",
-                  "// environment.",
-                  "pm.test.skip('\"collection_uid\" variable should be present', function () {",
-                  "    pm.expect(pm.variables.get('collection_uid')).to.be.a('string');",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "_postman_id": "4518432-c51c6eb6-45db-4994-96dd-6c734988ced2",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Api-Key",
-                "value": "{{postman_api_key}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{{updated_collection}}"
-            },
-            "url": "https://api.getpostman.com/collections/{{collection_uid}}",
-            "description": "This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).\n\nOn successful updation of the collection, the response returns the collection `name`, `id` and `uid`.\n\n> Requires <a href=\"#authentication\">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.\n\nNote: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body."
-          },
-          "response": [
-            {
-              "id": "4518432-4fd59166-d4d6-4ca7-a728-1681b521d8d3",
-              "name": "Collection Updated",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "X-Api-Key",
-                    "value": "{{postman_api_key}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"collection\": {\n    \"variables\": [],\n    \"info\": {\n      \"name\": \"Sample Collection\",\n      \"_postman_id\": \"1d3daef4-2037-4584-ab86-bafd8c8f8a55\",\n      \"description\": \"This is just a sample collection.\",\n      \"schema\": \"https://schema.getpostman.com/json/collection/v2.0.0/collection.json\"\n    },\n    \"item\": [\n      {\n        \"name\": \"This is a folder\",\n        \"description\": \"\",\n        \"item\": [\n          {\n            \"_postman_id\": \"b5e8d7dd-909c-4ba7-aef4-8609bc50b586\",\n            \"name\": \"Sample POST Request\",\n            \"request\": {\n              \"url\": \"echo.getpostman.com/post\",\n              \"method\": \"POST\",\n              \"header\": [\n                {\n                  \"key\": \"Content-Type\",\n                  \"value\": \"application/json\",\n                  \"description\": \"\"\n                }\n              ],\n              \"body\": {\n                \"mode\": \"raw\",\n                \"raw\": \"{\\n\\t\\\"data\\\": \\\"123\\\"\\n}\"\n              },\n              \"description\": \"This is a sample POST Request\"\n            },\n            \"response\": []\n          }\n        ]\n      },\n      {\n        \"name\": \"This is a second folder\",\n        \"description\": \"This is the second folder\",\n        \"item\": []\n      },\n      {\n        \"name\": \"Sample GET Request\",\n        \"request\": {\n          \"url\": \"echo.getpostman.com/get\",\n          \"method\": \"GET\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"formdata\": []\n          },\n          \"description\": \"This is a sample GET Request\"\n        },\n        \"response\": []\n      },\n      {\n        \"name\": \"This is the second request\",\n        \"request\": {\n          \"url\": \"echo.getpostman.com/post\",\n          \"method\": \"POST\",\n          \"header\": [],\n          \"body\": {\n            \"mode\": \"formdata\",\n            \"formdata\": []\n          },\n          \"description\": \"This is the second request\"\n        },\n        \"response\": []\n      }\n    ]\n  }\n}"
-                },
-                "url": "https://api.getpostman.com/collections/{{collection_uid}}"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Access-Control-Allow-Credentials",
-                  "value": "",
-                  "name": "Access-Control-Allow-Credentials",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Headers",
-                  "value": "",
-                  "name": "Access-Control-Allow-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Methods",
-                  "value": "",
-                  "name": "Access-Control-Allow-Methods",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "",
-                  "name": "Access-Control-Allow-Origin",
-                  "description": ""
-                },
-                {
-                  "key": "Access-Control-Expose-Headers",
-                  "value": "",
-                  "name": "Access-Control-Expose-Headers",
-                  "description": ""
-                },
-                {
-                  "key": "Connection",
-                  "value": "keep-alive",
-                  "name": "Connection",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Encoding",
-                  "value": "gzip",
-                  "name": "Content-Encoding",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "110",
-                  "name": "Content-Length",
-                  "description": ""
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json; charset=utf-8",
-                  "name": "Content-Type",
-                  "description": ""
-                },
-                {
-                  "key": "Date",
-                  "value": "Wed, 23 Nov 2016 12:03:23 GMT",
-                  "name": "Date",
-                  "description": ""
-                },
-                {
-                  "key": "ETag",
-                  "value": "W/\"89-Tuf/A5YFyf5ewpKKrb1Zww\"",
-                  "name": "ETag",
-                  "description": ""
-                },
-                {
-                  "key": "Server",
-                  "value": "nginx/1.8.0",
-                  "name": "Server",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Limit",
-                  "value": "60",
-                  "name": "X-RateLimit-Limit",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Remaining",
-                  "value": "56",
-                  "name": "X-RateLimit-Remaining",
-                  "description": ""
-                },
-                {
-                  "key": "X-RateLimit-Reset",
-                  "value": "1479902614",
-                  "name": "X-RateLimit-Reset",
-                  "description": ""
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\"collection\":{\"id\":\"1d3daef4-2037-4584-ab86-bafd8c8f8a55\",\"name\":\"Sample Collection\",\"uid\":\"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55\"}}"
-            }
-          ]
-        }
-      ],
-      "_postman_id": "4518432-0c6592c9-31a1-4874-9492-bf6ff139f138",
-      "description": "Transfer value from the request to the response.\n\nThis is the same as the Generate a new mock for an existing collection scenario, except you can enter data in a Postman request that will execute before this request to update the mock example (instead of entering data in the environment variable editor).\n\n**Requirements**\n* Postman API Key\n* `collection_uid`\n\n**Workflow** \n1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)\n1. Retrieve data, for example from a [`POST` request to sample Echo collection](https://docs.postman-echo.com/#083e46e7-53ea-87b1-8104-f8917ce58a17). Can also utilize a previous request to another endpoint or retrieve data via a Postman script like  [`pm.sendRequest()`](https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference#pmsendrequest).\n1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)\n  \n  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).\n\n  ![[post request form](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-form2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-form2.png)"
-    },
-    {
-      "name": "Return a response based on the request",
-      "item": [
-        {
-          "name": "Request to mock endpoint",
-          "_postman_id": "4518432-36c95d9d-9358-4649-90c0-dc3bb3d9213a",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "x-api-key",
-                "value": "{{postman_api_key}}"
-              },
-              {
-                "key": "x-mock-response-code",
-                "value": "{{desired_response_code}}"
-              },
-              {
-                "key": "x-mock-response-id",
-                "value": "{{desired_response_uid}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": "{{url}}/{{mockPath}}",
-            "description": "An example request to a mock endpoint that includes configurable variables to retrieve a desired response."
-          },
-          "response": []
-        }
-      ],
-      "_postman_id": "4518432-f4637ac3-48d2-46b6-9ff2-39a1f0e2fddf",
-      "description": "If you have a number of examples saved to a Postman mock, the [Postman matching algorithm](https://www.getpostman.com/docs/v6/postman/mock_servers/matching_algorithm) has a predictable way to retrieve the desired response. You can do this either in the Postman app or using the Postman API.\n\nConfigurable elements to retrieve a response:\n* `requestMethod` - any valid HTTP request method of a saved example (e.g. `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to select as part of your request\n* `mockPath`  - any valid string path of a saved example (e.g. `/`, `/test`, `/test/path`, `/test/path/1`) to include as part of your request URL\n* `x-mock-response-name` - optional header with the name of a saved example\n* `x-mock-response-id` - optional header with the uid of a saved example\n\n![[mocks matching algorithm](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-matching-algo2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-matching-algo2.png)"
-    }
-  ]
-}
+            "code": 200,
+            "_postman_previewlanguage": null,
+            "headers": [],
+            "cookies": [],
+            "body": "first example response"
+          }
+        ]
+      }
+```
+
+This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
+
+On successful updation of the collection, the response returns the collection `name`, `id` and `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
+Note: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (string)
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:110
+            Date:Wed, 23 Nov 2016 12:03:23 GMT
+            ETag:W/"89-Tuf/A5YFyf5ewpKKrb1Zww"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:56
+            X-RateLimit-Reset:1479902614
+
+    + Attributes (Collection Updated)
+
+
+    + Body
+
+            {"collection":{"id":"1d3daef4-2037-4584-ab86-bafd8c8f8a55","name":"Sample Collection","uid":"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55"}}
+
+
+
+
+# Group Transfer value from request to response
+
+Transfer value from the request to the response.
+
+This is the same as the Generate a new mock for an existing collection scenario, except you can enter data in a Postman request that will execute before this request to update the mock example (instead of entering data in the environment variable editor).
+
+**Requirements**
+* Postman API Key
+* `collection_uid`
+
+**Workflow** 
+1. Use the Postman API to [`GET` a single collection](https://docs.api.getpostman.com/#647806d5-492a-eded-1df6-6529b5dc685c)
+1. Retrieve data, for example from a [`POST` request to sample Echo collection](https://docs.postman-echo.com/#083e46e7-53ea-87b1-8104-f8917ce58a17). Can also utilize a previous request to another endpoint or retrieve data via a Postman script like  [`pm.sendRequest()`](https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference#pmsendrequest).
+1. Use the Postman API to [`PUT` a collection](https://docs.api.getpostman.com/#aa3701e8-7f99-b421-7d74-0d571b051f3c)
+  
+  *Note:* if exporting Postman Collection (version 2.1) from the Postman app and there are no headers, verify that the collection's response headers are equal to `[]` (empty array, instead of `null`).
+
+  ![[post request form](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-form2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-post-form2.png)
+
+## Post [/post]
+
+### Echo to POST Form Data [POST]
+The HTTP `POST` request method is meant to transfer data to a server 
+(and elicit a response). What data is returned depends on the implementation
+of the server.
+
+A `POST` request can pass parameters to the server using "Query String 
+Parameters", as well as the Request Body. For example, in the following request,
+
+> POST /hi/there?hand=wave
+>
+> <request-body>
+
+The parameter "hand" has the value "wave". The request body can be in multiple
+formats. These formats are defined by the MIME type of the request. The MIME 
+Type can be set using the ``Content-Type`` HTTP header. The most commonly used 
+MIME types are:
+
+* `multipart/form-data`
+* `application/x-www-form-urlencoded`
+* `application/json`
+
+This endpoint echoes the HTTP headers, request parameters, the contents of
+the request body and the complete URI requested when data is sent as a form parameter.
++ Attributes
+    + foo1 (string, required)
+
+        + Sample: this-new-value
+    + foo2 (string, required)
+
+        + Sample: how-about-this-now
+
++ Request (application/x-www-form-urlencoded)
+
+
+
+
++ Response 200 
+
+
+
+
+## Collections By Collection Uid [/collections/{collection_uid}]
+
++ Parameters
+    + collection_uid (string, required)
+
+
+### Get collection [GET]
+Access the contents of a collection that is accessible to you using its unique id (`uid`).
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
++ Request 
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Date:Fri, 27 May 2016 21:37:31 GMT
+            ETag:W/"453-t7Du3QMg1i7hkk6S4e3NvA"
+            Server:nginx/1.8.1
+            Vary:Accept-Encoding
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:57
+            X-RateLimit-Reset:1464385067
+            transfer-encoding:chunked
+
+    + Attributes (Valid Response)
+
+
+    + Body
+
+            {"collection":{"variables":[],"info":{"name":"Sample Collection","_postman_id":"f2e66c2e-5297-e4a5-739e-20cbb90900e3","description":"This is a sample collection that makes a tiny request to Postman Echo service to get the list of request headers sent by a HTTP client.","schema":"https://schema.getpostman.com/json/collection/v2.0.0/collection.json"},"item":[{"id":"82ee981b-e19f-962a-401e-ea34ebfb4848","name":"Request Headers","event":[{"listen":"test","script":{"type":"text/javascript","exec":"var responseJSON;\ntry {\n    tests[\"Body contains headers\"] = responseBody.has(\"headers\");\n    responseJSON = JSON.parse(responseBody);\n    tests[\"Header contains host\"] = \"host\" in responseJSON.headers;\n    tests[\"Header contains test parameter sent as part of request header\"] = \"my-sample-header\" in responseJSON.headers;\n}\ncatch (e) { }\n\n\n\n"}}],"request":{"url":"https://echo.getpostman.com/headers","method":"GET","header":[{"key":"my-sample-header","value":"Lorem ipsum dolor sit amet","description":""}],"body":{"mode":"formdata","formdata":[]},"description":""},"response":[]}]}}
+
+
+### Update collection with request data [PUT]
+This endpoint allows you to update an existing collection using the Postman Collection v2 format. For more information about the v2 schema, check the format [here](https://schema.getpostman.com/json/collection/v2.0.0/docs/index.html).
+
+On successful updation of the collection, the response returns the collection `name`, `id` and `uid`.
+
+> Requires <a href="#authentication">API Key</a> as `X-Api-Key` request header or `apikey` URL query parameter.
+
+Note: Please be careful when trying to update the collection, as the existing collection will be replaced by the request body.
+
++ Request (application/json)
+    + Headers
+
+            X-Api-Key:{{postman_api_key}}
+
+
+    + Attributes (string)
+
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Headers
+
+            Access-Control-Allow-Credentials:
+            Access-Control-Allow-Headers:
+            Access-Control-Allow-Methods:
+            Access-Control-Allow-Origin:
+            Access-Control-Expose-Headers:
+            Connection:keep-alive
+            Content-Encoding:gzip
+            Content-Length:110
+            Date:Wed, 23 Nov 2016 12:03:23 GMT
+            ETag:W/"89-Tuf/A5YFyf5ewpKKrb1Zww"
+            Server:nginx/1.8.0
+            X-RateLimit-Limit:60
+            X-RateLimit-Remaining:56
+            X-RateLimit-Reset:1479902614
+
+    + Attributes (Collection Updated)
+
+
+    + Body
+
+            {"collection":{"id":"1d3daef4-2037-4584-ab86-bafd8c8f8a55","name":"Sample Collection","uid":"5852-1d3daef4-2037-4584-ab86-bafd8c8f8a55"}}
+
+
+
+
+# Group Return a response based on the request
+
+If you have a number of examples saved to a Postman mock, the [Postman matching algorithm](https://www.getpostman.com/docs/v6/postman/mock_servers/matching_algorithm) has a predictable way to retrieve the desired response. You can do this either in the Postman app or using the Postman API.
+
+Configurable elements to retrieve a response:
+* `requestMethod` - any valid HTTP request method of a saved example (e.g. `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to select as part of your request
+* `mockPath`  - any valid string path of a saved example (e.g. `/`, `/test`, `/test/path`, `/test/path/1`) to include as part of your request URL
+* `x-mock-response-name` - optional header with the name of a saved example
+* `x-mock-response-id` - optional header with the uid of a saved example
+
+![[mocks matching algorithm](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-matching-algo2.png)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/dynamic-mock-matching-algo2.png)
+
+## By MockPath [/{mockPath}]
+
++ Parameters
+    + mockPath (string, required)
+
+
+### Request to mock endpoint [GET]
+An example request to a mock endpoint that includes configurable variables to retrieve a desired response.
+
++ Request 
+    + Headers
+
+            x-api-key:{{postman_api_key}}
+            x-mock-response-code:{{desired_response_code}}
+            x-mock-response-id:{{desired_response_uid}}
+
+
+
+
+
++ Response 200 
+
+
+
+
+
+# Data Structures
+
+## Create collection Request (object)
+
+
+### Properties
++ `collection` (Collection, required) 
+
+
+## Collection (object)
+
+
+### Properties
++ `info` (Info, required) 
++ `item` (array[Item], required) 
+
+
+## Info (object)
+
+
+### Properties
++ `name` (string, required) 
++ `description` (string, required) 
++ `schema` (string, required) 
+
+
+## Item (object)
+
+
+### Properties
++ `name` (string, required) 
++ `request` (Request, required) 
+
+
+## Request (object)
+
+
+### Properties
++ `url` (string, required) 
++ `method` (string, required) 
++ `header` (array[Header], optional) 
++ `body` (Body, optional) 
++ `description` (string, required) 
+
+
+## Header (object)
+
+
+### Properties
++ `key` (string, required) 
++ `value` (string, required) 
+
+
+## Body (object)
+
+
+### Properties
++ `mode` (string, required) 
++ `raw` (string, required) 
+
+
+## Collection Created (object)
+
+
+### Properties
++ `collection` (Collection1, required) 
+
+
+## Collection1 (object)
+
+
+### Properties
++ `id` (string, required) 
++ `name` (string, required) 
++ `uid` (string, required) 
+
+
+## Create mock Request (object)
+
+
+### Properties
++ `mock` (Mock, required) 
+
+
+## Mock (object)
+
+
+### Properties
++ `collection` (string, required) 
+
+
+## Successful Response (object)
+
+
+### Properties
++ `mock` (Mock1, required) 
+
+
+## Mock1 (object)
+
+
+### Properties
++ `id` (string, required) 
++ `owner` (string, required) 
++ `uid` (string, required) 
++ `collection` (string, required) 
++ `environment` (string, required) 
++ `mockUrl` (string, required) 
+
+
+## Valid Response (object)
+
+
+### Properties
++ `collection` (Collection2, required) 
+
+
+## Collection2 (object)
+
+
+### Properties
++ `variables` (array[string], required) 
++ `info` (Info1, required) 
++ `item` (array[Item1], required) 
+
+
+## Info1 (object)
+
+
+### Properties
++ `name` (string, required) 
++ `_postman_id` (string, required) 
++ `description` (string, required) 
++ `schema` (string, required) 
+
+
+## Item1 (object)
+
+
+### Properties
++ `id` (string, required) 
++ `name` (string, required) 
++ `event` (array[Event], required) 
++ `request` (Request1, required) 
++ `response` (array[string], required) 
+
+
+## Event (object)
+
+
+### Properties
++ `listen` (string, required) 
++ `script` (Script, required) 
+
+
+## Script (object)
+
+
+### Properties
++ `type` (string, required) 
++ `exec` (string, required) 
+
+
+## Request1 (object)
+
+
+### Properties
++ `url` (string, required) 
++ `method` (string, required) 
++ `header` (array[Header1], required) 
++ `body` (Body1, required) 
++ `description` (string, required) 
+
+
+## Header1 (object)
+
+
+### Properties
++ `key` (string, required) 
++ `value` (string, required) 
++ `description` (string, required) 
+
+
+## Body1 (object)
+
+
+### Properties
++ `mode` (string, required) 
++ `formdata` (array[string], required) 
+
+
+## Collection Updated (object)
+
+
+### Properties
++ `collection` (Collection1, required) 
+
