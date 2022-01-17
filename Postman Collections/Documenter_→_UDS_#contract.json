@@ -9,7 +9,7 @@
   "host": "example.com",
   "basePath": "/",
   "securityDefinitions": {
-    "auth": {
+    "basic": {
       "type": "basic"
     }
   },
@@ -192,7 +192,12 @@
             "description": "",
             "headers": {}
           }
-        }
+        },
+        "security": [
+          {
+            "basic": []
+          }
+        ]
       }
     },
     "/api/users/{RbacUserId}/delete_account": {
@@ -406,11 +411,7 @@
       ]
     }
   },
-  "security": [
-    {
-      "auth": []
-    }
-  ],
+  "security": [],
   "tags": [
     {
       "name": "Setup"
