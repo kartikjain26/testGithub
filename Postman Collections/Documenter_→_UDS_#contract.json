@@ -1,697 +1,427 @@
 {
+  "swagger": "2.0",
   "info": {
-    "_postman_id": "223408-68467857-d4a8-4574-9958-72d08ec09880",
-    "name": "Documenter ’ UDS #contract",
+    "version": "1.0",
+    "title": "Documenter ’ UDS #contract",
     "description": "Binding contract for UDS, covers all endpoints called by Documenter",
-    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+    "contact": {}
   },
-  "item": [
-    {
-      "name": "Setup",
-      "item": [
-        {
-          "name": "Create non-RBAC User",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "fd40ddb9-193a-4a8a-b2a5-41aae00d92a1",
-                "exec": [
-                  "try {",
-                  "    const response = pm.response.json();",
-                  "",
-                  "    pm.environment.set(\"nonRbacUserId\", response.user_id);",
-                  "    pm.environment.set(\"nonRbacUserToken\", response.access_token);",
-                  "}",
-                  "catch (exception) {",
-                  "    console.log('Exception: ', exception);",
-                  "    console.log('Response Body: ', pm.response);",
-                  "    pm.setNextRequest(null);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            },
-            {
-              "listen": "prerequest",
-              "script": {
-                "id": "a89a9ddc-d39c-4f86-a565-8e0d709a9f4f",
-                "exec": [
-                  "pm.environment.set(\"nonRbacUserPrefix\", \"free\"+Math.random() * 10000)"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "_postman_id": "223408-02c60baf-f418-4525-af39-bc87a14cd4c4",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "name": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
+  "host": "example.com",
+  "basePath": "/",
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic"
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/signup": {
+      "post": {
+        "summary": "Create non-RBAC User",
+        "tags": [
+          "Setup"
+        ],
+        "operationId": "Createnon-RBACUser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": false,
+            "enum": [
+              "application/json"
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"username\": \"{{nonRbacUserPrefix}}\",\n\t\"email\": \"{{nonRbacUserPrefix}}@postman.com\",\n\t\"password\": \"{{nonRbacUserPrefix}}\",\n\t\"silent\": true\n}"
-            },
-            "url": "{{godUrl}}/api/signup"
+            "type": "string",
+            "description": ""
           },
-          "response": []
-        },
-        {
-          "name": "Create RBAC User",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "fd40ddb9-193a-4a8a-b2a5-41aae00d92a1",
-                "exec": [
-                  "try {",
-                  "    const response = pm.response.json();",
-                  "",
-                  "    pm.environment.set(\"RbacUserId\", response.user_id);",
-                  "    pm.environment.set(\"RbacUserToken\", response.access_token);",
-                  "    ",
-                  "    console.log('Rbac user:', response.user_id);",
-                  "}",
-                  "catch (exception) {",
-                  "    console.log('Exception: ', exception);",
-                  "    console.log('Response Body: ', pm.response);",
-                  "    pm.setNextRequest(null);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            },
-            {
-              "listen": "prerequest",
-              "script": {
-                "id": "a89a9ddc-d39c-4f86-a565-8e0d709a9f4f",
-                "exec": [
-                  "pm.environment.set(\"RbacUserPrefix\", \"free\"+Math.random() * 10000)"
-                ],
-                "type": "text/javascript"
-              }
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Createnon-RBACUserRequest"
             }
-          ],
-          "_postman_id": "223408-d99a1e0c-304b-401e-af3e-474a9042621c",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"username\": \"{{RbacUserPrefix}}\",\n\t\"email\": \"{{RbacUserPrefix}}@postman.com\",\n\t\"password\": \"{{RbacUserPrefix}}\"\n}"
-            },
-            "url": "{{godUrl}}/api/signup"
-          },
-          "response": []
-        },
-        {
-          "name": "Migrate User to RBAC",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "e02d6bad-1ede-43fa-a118-bfac7c2f7934",
-                "exec": [
-                  "let res = pm.response.json();",
-                  "",
-                  "try {",
-                  "    let result = res.result;",
-                  "    ",
-                  "    if (result != 'success') {",
-                  "        postman.setNextRequest(null);",
-                  "    }",
-                  "}",
-                  "catch (e) {",
-                  "    postman.setNextRequest(null);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "_postman_id": "223408-44edafff-ab0e-4322-8d63-534b76cfb306",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Postman-Token",
-                "value": "c2d2dee7-bb75-485e-8d3f-f239ef53812f"
-              },
-              {
-                "key": "cache-control",
-                "value": "no-cache"
-              },
-              {
-                "key": "x-access-token",
-                "value": "{{RbacUserToken}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\t\n\t\"targetApiVersion\": \"1\"\n}"
-            },
-            "url": "{{godUrl}}/api/users/{{RbacUserId}}/migrate_api_version"
-          },
-          "response": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
         }
-      ],
-      "_postman_id": "223408-56542b8a-afc6-4a68-9cae-031a62b8f33f"
+      }
+    },
+    "/api/users/{RbacUserId}/migrate_api_version": {
+      "put": {
+        "summary": "Migrate User to RBAC",
+        "tags": [
+          "Setup"
+        ],
+        "operationId": "MigrateUsertoRBAC",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": false,
+            "enum": [
+              "application/json"
+            ],
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Postman-Token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "cache-control",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/MigrateUsertoRBACRequest"
+            }
+          },
+          {
+            "name": "RbacUserId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/v1/list": {
+      "post": {
+        "summary": "Get Team for User ID",
+        "tags": [
+          "List Entities"
+        ],
+        "operationId": "GetTeamforUserID",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parents",
+            "in": "query",
+            "required": true,
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": false,
+            "enum": [
+              "application/json"
+            ],
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "x-postman-service",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "example": "{\n\t\"users\": [{{userID}}]\n}",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "basic": []
+          }
+        ]
+      }
+    },
+    "/api/users/{RbacUserId}/delete_account": {
+      "post": {
+        "summary": "Delete RBAC User",
+        "tags": [
+          "Teardown"
+        ],
+        "operationId": "DeleteRBACUser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": false,
+            "enum": [
+              "application/json"
+            ],
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Postman-Token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "cache-control",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "RbacUserId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/api/users/{nonRbacUserId}/delete_account": {
+      "post": {
+        "summary": "Delete non-RBAC User",
+        "tags": [
+          "Teardown"
+        ],
+        "operationId": "Deletenon-RBACUser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": false,
+            "enum": [
+              "application/json"
+            ],
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Postman-Token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "cache-control",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "nonRbacUserId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Createnon-RBACUserRequest": {
+      "title": "Createnon-RBACUserRequest",
+      "example": {
+        "username": "{{nonRbacUserPrefix}}",
+        "email": "{{nonRbacUserPrefix}}@postman.com",
+        "password": "{{nonRbacUserPrefix}}",
+        "silent": true
+      },
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "silent": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "username",
+        "email",
+        "password",
+        "silent"
+      ]
+    },
+    "CreateRBACUserRequest": {
+      "title": "CreateRBACUserRequest",
+      "example": {
+        "username": "{{RbacUserPrefix}}",
+        "email": "{{RbacUserPrefix}}@postman.com",
+        "password": "{{RbacUserPrefix}}"
+      },
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "username",
+        "email",
+        "password"
+      ]
+    },
+    "MigrateUsertoRBACRequest": {
+      "title": "MigrateUsertoRBACRequest",
+      "example": {
+        "targetApiVersion": "1"
+      },
+      "type": "object",
+      "properties": {
+        "targetApiVersion": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "targetApiVersion"
+      ]
+    }
+  },
+  "security": [],
+  "tags": [
+    {
+      "name": "Setup"
     },
     {
       "name": "List Entities",
-      "item": [
-        {
-          "name": "Get Team for User ID",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "e0340c29-3044-4f38-b788-19b01376bffe",
-                "type": "text/javascript",
-                "exec": [
-                  "const response = pm.response.json(),",
-                  "    userID = pm.environment.get('userID'),",
-                  "    teamID = pm.environment.get('teamID');",
-                  "",
-                  "pm.test(\"Status code is 200\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"`teams` property should exist\", function () {",
-                  "    pm.expect(response).to.have.property('teams');",
-                  "});",
-                  "",
-                  "pm.test(\"`teams` property should refer to an object\", function () {",
-                  "    pm.expect(response.teams).to.be.an('object');",
-                  "});",
-                  "",
-                  "pm.test(\"`teams` object should include team ID\", function () {",
-                  "    pm.expect(response.teams).to.have.property(teamID);",
-                  "    pm.expect(response.teams[teamID]).to.be.an('object');",
-                  "});",
-                  "",
-                  "pm.test(\"Team object should have correct keys\", function () {",
-                  "    pm.expect(response.teams[teamID]).to.have.all.keys('id', 'friendly');",
-                  "});",
-                  "",
-                  "pm.test(\"User object properties should have expected value types\", function () {",
-                  "    pm.expect(response.users[teamID].id).to.be.a('number');",
-                  "    pm.expect(response.users[teamID].friendly).to.be.a('string');",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "_postman_id": "223408-0f6ad1ce-f8ae-48f8-bda8-218a34b7d807",
-          "request": {
-            "auth": {
-              "type": "basic",
-              "basic": {
-                "password": "6CpccuwmgpGCqgTJqiLK",
-                "username": "Qw1wHsGwVJ"
-              }
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "x-postman-service",
-                "value": "documenter"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"users\": [{{userID}}]\n}"
-            },
-            "url": {
-              "raw": "{{udsUrl}}/v1/list?parents=true",
-              "host": [
-                "{{udsUrl}}"
-              ],
-              "path": [
-                "v1",
-                "list"
-              ],
-              "query": [
-                {
-                  "key": "parents",
-                  "value": "true"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get Users in Team",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "58be0b43-739e-4945-9767-b613039de53b",
-                "type": "text/javascript",
-                "exec": [
-                  "const response = pm.response.json(),",
-                  "    userID = pm.environment.get('userID'),",
-                  "    teamID = pm.environment.get('teamID');",
-                  "",
-                  "pm.test(\"Status code is 200\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"`users` property should exist\", function () {",
-                  "    pm.expect(response).to.have.property('users');",
-                  "});",
-                  "",
-                  "",
-                  "pm.test(\"`users` property should refer to an object\", function () {",
-                  "    pm.expect(response.users).to.be.an('object');",
-                  "});",
-                  "",
-                  "pm.test(\"`users` object should include user ID\", function () {",
-                  "    pm.expect(response.users).to.have.property('1');",
-                  "    pm.expect(response.users[userID]).to.be.an('object');",
-                  "});",
-                  "",
-                  "pm.test(\"User object should have correct keys\", function () {",
-                  "    pm.expect(Object.keys(response.users[userID])).to.eql(['id', 'friendly']);",
-                  "});",
-                  "",
-                  "pm.test(\"User object properties should have expected value types\", function () {",
-                  "    pm.expect(response.users[userID].id).to.be.a('number');",
-                  "    pm.expect(response.users[userID].friendly).to.be.a('string');",
-                  "});",
-                  ""
-                ]
-              }
-            }
-          ],
-          "_postman_id": "223408-dff1f1dd-7420-49fb-bec3-6a9012afa204",
-          "request": {
-            "auth": {
-              "type": "basic",
-              "basic": {
-                "password": "6CpccuwmgpGCqgTJqiLK",
-                "username": "Qw1wHsGwVJ"
-              }
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "x-postman-service",
-                "value": "documenter"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"teams\": [{{teamID}}]\n}"
-            },
-            "url": {
-              "raw": "{{udsUrl}}/v1/list?members=true",
-              "host": [
-                "{{udsUrl}}"
-              ],
-              "path": [
-                "v1",
-                "list"
-              ],
-              "query": [
-                {
-                  "key": "members",
-                  "value": "true"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get non-RBAC User API Version",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "58be0b43-739e-4945-9767-b613039de53b",
-                "exec": [
-                  "const response = pm.response.json(),",
-                  "    userID = pm.environment.get('nonRbacUserId');",
-                  "",
-                  "pm.test(\"Status code is 200\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"`users` property should exist\", function () {",
-                  "    pm.expect(response).to.have.property('users');",
-                  "});",
-                  "",
-                  "",
-                  "pm.test(\"`users` property should refer to an object\", function () {",
-                  "    pm.expect(response.users).to.be.an('object');",
-                  "});",
-                  "",
-                  "pm.test(\"`users` object should include user ID\", function () {",
-                  "    pm.expect(response.users).to.have.property(userID);",
-                  "    pm.expect(response.users[userID]).to.be.an('object');",
-                  "});",
-                  "",
-                  "pm.test(\"individual user object should contain the api version\", function () {",
-                  "    pm.expect(response.users[userID]).to.have.property('_etc_api_version', 0);",
-                  "});",
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "_postman_id": "223408-01cced70-3c9a-4f94-bc51-b3a0b672210b",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "basic",
-              "basic": {
-                "password": "6CpccuwmgpGCqgTJqiLK",
-                "username": "Qw1wHsGwVJ"
-              }
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "x-postman-service",
-                "value": "documenter"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"users\": [{{nonRbacUserId}}]\n}"
-            },
-            "url": {
-              "raw": "{{udsUrl}}/v1/list?parents=true&_etc=true",
-              "host": [
-                "{{udsUrl}}"
-              ],
-              "path": [
-                "v1",
-                "list"
-              ],
-              "query": [
-                {
-                  "key": "parents",
-                  "value": "true"
-                },
-                {
-                  "key": "_etc",
-                  "value": "true"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get RBAC User API Version",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "58be0b43-739e-4945-9767-b613039de53b",
-                "exec": [
-                  "const response = pm.response.json(),",
-                  "    userID = pm.environment.get('RbacUserId');",
-                  "",
-                  "pm.test(\"Status code is 200\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"`users` property should exist\", function () {",
-                  "    pm.expect(response).to.have.property('users');",
-                  "});",
-                  "",
-                  "",
-                  "pm.test(\"`users` property should refer to an object\", function () {",
-                  "    pm.expect(response.users).to.be.an('object');",
-                  "});",
-                  "",
-                  "pm.test(\"`users` object should include user ID\", function () {",
-                  "    pm.expect(response.users).to.have.property(userID);",
-                  "    pm.expect(response.users[userID]).to.be.an('object');",
-                  "});",
-                  "",
-                  "pm.test(\"individual user object should contain the api version\", function () {",
-                  "    pm.expect(response.users[userID]).to.have.property('_etc_api_version', 1);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "_postman_id": "223408-2bcf3eff-bb05-451a-b452-30cf6f4d08a8",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "basic",
-              "basic": {
-                "password": "6CpccuwmgpGCqgTJqiLK",
-                "username": "Qw1wHsGwVJ"
-              }
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "x-postman-service",
-                "value": "documenter"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "{{url}}/v1/list?parents=true&_etc=true",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "v1",
-                "list"
-              ],
-              "query": [
-                {
-                  "key": "parents",
-                  "value": "true"
-                },
-                {
-                  "key": "_etc",
-                  "value": "true"
-                }
-              ]
-            }
-          },
-          "response": []
-        }
-      ],
-      "_postman_id": "223408-73ffc32f-807c-4cb9-9d4c-fe92d896608a",
-      "description": "This method is used by Email to fetch information about users and teams. There are checks on the response structure, and existence of some keys.",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "id": "4c3ede25-148f-4ffd-b8e4-81cd0ff22efb",
-            "type": "text/javascript",
-            "exec": [
-              ""
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "id": "9d5397b8-2e2b-4aa7-9f02-b092176f97de",
-            "type": "text/javascript",
-            "exec": [
-              ""
-            ]
-          }
-        }
-      ]
+      "description": "This method is used by Email to fetch information about users and teams. There are checks on the response structure, and existence of some keys."
     },
     {
-      "name": "Teardown",
-      "item": [
-        {
-          "name": "Delete RBAC User",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "b4cdf1be-5c08-4f51-981a-171fd09e0f5b",
-                "exec": [
-                  "pm.environment.unset(\"RbacUserId\");",
-                  "pm.environment.unset(\"RbacUserPrefix\");",
-                  "pm.environment.unset(\"RbacUserToken\");"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "_postman_id": "223408-d3bbf5ea-3ac3-486a-820b-dc1afeb7deba",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Postman-Token",
-                "value": "65cbe4c5-cfae-481d-9c68-9f905063de04"
-              },
-              {
-                "key": "cache-control",
-                "value": "no-cache"
-              }
-            ],
-            "body": {
-              "mode": "formdata",
-              "formdata": []
-            },
-            "url": {
-              "raw": "{{godUrl}}/api/users/{{RbacUserId}}/delete_account?user_id={{RbacUserId}}&access_token={{RbacUserToken}}",
-              "host": [
-                "{{godUrl}}"
-              ],
-              "path": [
-                "api",
-                "users",
-                "{{RbacUserId}}",
-                "delete_account"
-              ],
-              "query": [
-                {
-                  "key": "user_id",
-                  "value": "{{RbacUserId}}"
-                },
-                {
-                  "key": "access_token",
-                  "value": "{{RbacUserToken}}"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Delete non-RBAC User",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "3c4dedfe-ae4a-4b51-ba17-375659b654ac",
-                "exec": [
-                  "pm.environment.unset(\"nonRbacUserId\");",
-                  "pm.environment.unset(\"nonRbacUserPrefix\");",
-                  "pm.environment.unset(\"nonRbacUserToken\");"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "_postman_id": "223408-d4d4a5a3-e615-4af8-acb8-2cbf2492c38e",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Postman-Token",
-                "value": "65cbe4c5-cfae-481d-9c68-9f905063de04"
-              },
-              {
-                "key": "cache-control",
-                "value": "no-cache"
-              }
-            ],
-            "body": {
-              "mode": "formdata",
-              "formdata": []
-            },
-            "url": {
-              "raw": "{{godUrl}}/api/users/{{nonRbacUserId}}/delete_account?user_id={{nonRbacUserId}}&access_token={{nonRbacUserToken}}",
-              "host": [
-                "{{godUrl}}"
-              ],
-              "path": [
-                "api",
-                "users",
-                "{{nonRbacUserId}}",
-                "delete_account"
-              ],
-              "query": [
-                {
-                  "key": "user_id",
-                  "value": "{{nonRbacUserId}}"
-                },
-                {
-                  "key": "access_token",
-                  "value": "{{nonRbacUserToken}}"
-                }
-              ]
-            }
-          },
-          "response": []
-        }
-      ],
-      "_postman_id": "223408-da42ff60-6adc-4a1d-9a6a-502b9230af5a"
+      "name": "Teardown"
     }
   ]
 }
