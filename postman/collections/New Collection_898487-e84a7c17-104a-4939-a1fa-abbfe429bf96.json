@@ -5,5 +5,51 @@
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "898487-e84a7c17-104a-4939-a1fa-abbfe429bf96"
 	},
-	"item": []
+	"item": [
+		{
+			"name": "New Request",
+			"id": "a9c25fd7-8dda-4b99-9951-db2e3be8cd01",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request Copy",
+			"id": "76e61c32-f5d5-45f2-8b62-a9fc704bc8fb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request Copy 2",
+			"id": "d50157d2-c4ce-461a-9b2e-26b4916c7508",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
 }
