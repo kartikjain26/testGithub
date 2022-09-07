@@ -12,3 +12,4 @@ rootDirectory = Postman Collections
 wd
 [relations.apiDefinition.metaData]
 type = openapi:3
+remote commit
