@@ -21,4 +21,7 @@ files[] = {"path":"ss.json","metaData":{}}
 files[] = {"path":"Test.json","metaData":{}}
 
 [relations.apiDefinition.metaData]
-type = openapi:3
+type = openapi:3efw
+wef
+few
+
