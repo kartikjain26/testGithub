@@ -4,12 +4,21 @@ id = 04608777-57e0-4160-9925-a1ba59e3b01f
 
 [relations.collections]
 rootDirectory = postman/collections
+files[] = {"id":"e84a7c17-104a-4939-a1fa-abbfe429bf96","path":"New Collection_898487-e84a7c17-104a-4939-a1fa-abbfe429bf96.json","metaData":{}}
 
 [relations.collections.metaData]
 
 [relations.apiDefinition]
 rootDirectory = Postman Collections
-wd
+files[] = {"path":"Documenter_favicon.json","metaData":{}}
+files[] = {"path":"Documenter_→_UDS_#contract.json","metaData":{}}
+files[] = {"path":"foo.json","metaData":{}}
+files[] = {"path":"index.yaml","metaData":{}}
+files[] = {"path":"inline_testing_`test`.json","metaData":{}}
+files[] = {"path":"Movie_Summary_collection.json","metaData":{}}
+files[] = {"path":"okay.json","metaData":{}}
+files[] = {"path":"ss.json","metaData":{}}
+files[] = {"path":"Test.json","metaData":{}}
+
 [relations.apiDefinition.metaData]
 type = openapi:3
-remote commit
