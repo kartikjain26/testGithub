@@ -83,6 +83,21 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "New Request Copy 5",
+			"id": "d1682682-a601-4b54-8590-b804cd42e389",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
 		}
 	]
 }
