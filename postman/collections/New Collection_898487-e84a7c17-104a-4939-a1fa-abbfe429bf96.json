@@ -98,6 +98,21 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "New Request Copy 6",
+			"id": "8e7e9faa-ccbe-46c0-bfb1-f9a9e596cf31",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
 		}
 	]
 }
