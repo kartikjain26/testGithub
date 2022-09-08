@@ -7,13 +7,13 @@
   },
   "item": [
     {
-      "name": "req",
+      "name": "redq",
       "_postman_id": "6329-4333d708-8749-44cd-98b6-2ac01f4839e0",
       "request": {
         "method": "GET",
         "header": [],
         "body": {
-          "mode": "formdata",
+          "mode": "formddata",
           "formdata": []
         },
         "url": "{{url}}",

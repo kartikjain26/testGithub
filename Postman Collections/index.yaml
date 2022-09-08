@@ -1,9 +1,9 @@
 openapi: 3.0.0
 info:
   version: '1.0.0'
-  title: 'Sample API'
+  title: 'Sample APID'
   license:
-   efsdd name: MIT
+   efsdd name: MITwqd
 servers:
   - url: 'localhost:3000'
 paths:

@@ -13,7 +13,7 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"method": "PATCH",
+				"method": "PUT",
 				"header": [],
 				"url": {
 					"raw": "qdwdqwdwqdqw",
@@ -34,7 +34,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "wqwqe",
+					"host": [
+						"wqwqe"
+					]
 				}
 			},
 			"response": []
@@ -64,7 +67,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "wd",
+					"host": [
+						"wd"
+					]
 				}
 			},
 			"response": []
@@ -110,6 +116,24 @@
 				"header": [],
 				"url": {
 					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request Copy 7",
+			"id": "99a7177a-67a6-4140-9185-2298d2b5a01a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "wd",
+					"host": [
+						"wd"
+					]
 				}
 			},
 			"response": []
