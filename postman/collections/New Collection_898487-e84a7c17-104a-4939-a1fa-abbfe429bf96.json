@@ -13,7 +13,7 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"method": "GET",
+				"method": "PATCH",
 				"header": [],
 				"url": {
 					"raw": ""
@@ -44,6 +44,21 @@
 			},
 			"request": {
 				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request Copy 3",
+			"id": "388142f1-929b-4060-89b7-c0b37d067236",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PATCH",
 				"header": [],
 				"url": {
 					"raw": ""
